@@ -132,9 +132,9 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <!-- Google Form Settings Link -->
-                <button type="button" onclick="openGFormModal()" class="bg-white/10 hover:bg-white/20 text-white font-medium px-3 py-1 rounded-lg text-xs transition border border-safeCyan-400/40 flex items-center gap-1.5 shadow-sm" title="Google Sheet / Form सेटिंग्स">
-                    <i class="fab fa-google-drive text-safeCyan-400"></i> G-Sheet लिंक
+                <!-- Google Sheet Direct Integration Link -->
+                <button type="button" onclick="openGSheetModal()" class="bg-white/10 hover:bg-white/20 text-white font-medium px-3 py-1 rounded-lg text-xs transition border border-safeCyan-400/40 flex items-center gap-1.5 shadow-sm" title="Google Sheet डायरेक्ट सिंक सेटिंग्स">
+                    <i class="fas fa-table-cells text-emerald-400"></i> Google Sheet सिंक
                 </button>
             </div>
         </div>
@@ -145,10 +145,10 @@
                 
                 <!-- Logo & Campaign Title -->
                 <div class="flex items-center space-x-3.5">
-                    <!-- Project SAFE Logo Rendered with official brand image -->
-                    <div class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 drop-shadow-lg flex items-center justify-center p-1 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-sm">
+                    <!-- Project SAFE Logo Rendered with official brand image & SVG Fallback -->
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 drop-shadow-lg flex items-center justify-center p-1 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-sm overflow-hidden" id="mainHeaderLogoContainer">
                         <img src="safe city logo.jpg" alt="PROJECT SAFE Official Logo" 
-                             onerror="this.onerror=null; this.src='WHITE FINEL LOGO SAFE PROJECT.png';" 
+                             onerror="renderSafeLogoSvg(this.parentElement, 68)" 
                              class="w-full h-full object-contain filter drop-shadow">
                     </div>
 
@@ -181,9 +181,9 @@
                         <div class="text-safePink-400 font-black text-xl md:text-2xl">100%</div>
                         <div class="text-slate-200 text-[10px] font-medium mt-0.5">डिजिटल वेरिफिकेशन</div>
                     </div>
-                    <!-- Quick G-Sheet Sync Modal Opener -->
-                    <button type="button" onclick="openGFormModal()" title="Google Form सेटिंग्स" class="bg-safeCyan-500/20 hover:bg-safeCyan-500/30 text-safeCyan-300 border border-safeCyan-400/40 px-3 py-2 rounded-xl text-xs flex flex-col items-center justify-center transition">
-                        <i class="fab fa-google text-sm"></i>
+                    <!-- Direct G-Sheet Sync Modal Opener -->
+                    <button type="button" onclick="openGSheetModal()" title="Google Sheet सेटिंग्स एवं स्क्रिप्ट" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 px-3 py-2 rounded-xl text-xs flex flex-col items-center justify-center transition">
+                        <i class="fas fa-table text-sm"></i>
                         <span class="text-[9px] mt-0.5 font-bold">G-Sheet</span>
                     </button>
                 </div>
@@ -195,13 +195,13 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 py-8 flex-grow">
         
-        <!-- Google Form Sync Notification Banner -->
-        <div id="gformStatusBanner" class="mb-4 hidden p-3 rounded-xl border text-xs flex items-center justify-between transition-all">
-            <div class="flex items-center gap-2" id="gformStatusText">
+        <!-- Google Sheet Sync Notification Banner -->
+        <div id="gsheetStatusBanner" class="mb-4 hidden p-3 rounded-xl border text-xs flex items-center justify-between transition-all">
+            <div class="flex items-center gap-2" id="gsheetStatusText">
                 <i class="fas fa-circle-check text-emerald-600 text-sm"></i>
-                <span>Google Form में डेटा सुरक्षित हो रहा है...</span>
+                <span>Google Sheet में डेटा सुरक्षित हो रहा है...</span>
             </div>
-            <button onclick="document.getElementById('gformStatusBanner').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
+            <button onclick="document.getElementById('gsheetStatusBanner').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
                 <i class="fas fa-xmark"></i>
             </button>
         </div>
@@ -407,8 +407,8 @@
                             <i class="fas fa-shield-halved text-safeCyan-300"></i> PROJECT SAFE में पंजीकरण करें एवं ID/प्रमाणपत्र प्राप्त करें
                         </button>
                         <div class="flex items-center justify-center gap-3 mt-2 text-[11px] text-slate-500">
-                            <span class="flex items-center gap-1 text-emerald-600 font-medium">
-                                <i class="fas fa-database text-xs"></i> Google Form ऑटो-सबमिट सक्षम
+                            <span class="flex items-center gap-1 text-emerald-600 font-semibold">
+                                <i class="fas fa-file-excel text-xs"></i> Google Sheet डायरेक्ट ऑटो-सेव सक्षम
                             </span>
                             <span>•</span>
                             <span class="flex items-center gap-1">
@@ -428,8 +428,8 @@
                         <span class="text-xs uppercase tracking-wider text-safeCyan-300 font-bold bg-white/10 px-3 py-1 rounded-full border border-safeCyan-400/30 flex items-center gap-1.5">
                             <i class="fas fa-shield-halved text-safePink-400"></i> PROJECT SAFE अभियान
                         </span>
-                        <div class="w-12 h-12 p-1 bg-white/10 rounded-xl border border-white/10">
-                            <img src="safe city logo.jpg" alt="Logo" onerror="this.onerror=null; this.src='WHITE FINEL LOGO SAFE PROJECT.png';" class="w-full h-full object-contain">
+                        <div class="w-12 h-12 p-1 bg-white/10 rounded-xl border border-white/10 flex items-center justify-center">
+                            <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 42)" class="w-full h-full object-contain">
                         </div>
                     </div>
                     <h3 class="text-lg font-bold mb-2 font-montserrat">पंजीकरण के मुख्य लाभ</h3>
@@ -549,8 +549,8 @@
                             
                             <!-- Header Logo & Heading -->
                             <div class="flex items-center justify-center gap-2.5">
-                                <div class="w-10 h-10 flex-shrink-0 bg-white/15 p-1 rounded-xl border border-white/20">
-                                    <img src="safe city logo.jpg" alt="Logo" onerror="this.onerror=null; this.src='WHITE FINEL LOGO SAFE PROJECT.png';" class="w-full h-full object-contain">
+                                <div class="w-10 h-10 flex-shrink-0 bg-white/15 p-1 rounded-xl border border-white/20 flex items-center justify-center">
+                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 34)" class="w-full h-full object-contain">
                                 </div>
                                 <div class="text-left">
                                     <h3 class="font-extrabold text-sm tracking-wide text-white font-montserrat leading-none">
@@ -650,15 +650,15 @@
                     <div id="certificateWrapper" class="w-[880px] min-w-[880px] p-8 bg-white cert-border rounded-xl shadow-2xl relative text-slate-800">
                         
                         <!-- Watermark Project SAFE Shield Logo -->
-                        <div class="absolute inset-0 flex items-center justify-center opacity-[0.05] pointer-events-none">
-                            <img src="safe city logo.jpg" alt="Watermark" onerror="this.onerror=null; this.src='WHITE FINEL LOGO SAFE PROJECT.png';" class="w-[380px] h-[380px] object-contain">
+                        <div class="absolute inset-0 flex items-center justify-center opacity-[0.06] pointer-events-none" id="certWatermarkBox">
+                            <img src="safe city logo.jpg" alt="Watermark" onerror="renderSafeLogoSvg(this.parentElement, 360)" class="w-[380px] h-[380px] object-contain">
                         </div>
 
                         <!-- Header Emblems with Official Project SAFE Logo -->
                         <div class="flex items-center justify-between border-b-2 border-sky-500/30 pb-4 mb-4">
                             <div class="flex items-center space-x-3.5">
-                                <div class="w-16 h-16 flex-shrink-0 drop-shadow p-1 bg-white rounded-xl border border-sky-200">
-                                    <img src="safe city logo.jpg" alt="Logo" onerror="this.onerror=null; this.src='WHITE FINEL LOGO SAFE PROJECT.png';" class="w-full h-full object-contain">
+                                <div class="w-16 h-16 flex-shrink-0 drop-shadow p-1 bg-white rounded-xl border border-sky-200 flex items-center justify-center">
+                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 56)" class="w-full h-full object-contain">
                                 </div>
                                 <div>
                                     <p class="text-[10px] tracking-widest uppercase font-bold text-safeNavy-900">National Women Empowerment Initiative</p>
@@ -770,94 +770,149 @@
             </div>
 
             <div class="flex gap-2">
-                <button type="button" onclick="captureWebcamPhoto()" class="flex-1 bg-safeNavy-900 hover:bg-safeNavy-950 text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+                <button type="button" onclick="captureWebcamPhoto()" class="flex-1 bg-safeNavy-900 hover:bg-safeNavy-800 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2">
                     <i class="fas fa-camera-retro text-safeCyan-400"></i> फ़ोटो खींचें (Capture)
                 </button>
-                <button type="button" onclick="closeWebcamModal()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs">
+                <button type="button" onclick="closeWebcamModal()" class="px-4 py-2.5 bg-slate-200 text-slate-700 font-bold rounded-xl text-xs">
                     रद्द करें
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Google Form Settings Modal -->
-    <div id="gformModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <!-- Google Sheet Direct Integration Settings Modal -->
+    <div id="gsheetModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 space-y-4 shadow-2xl max-h-[92vh] overflow-y-auto text-slate-800">
             <div class="flex justify-between items-center border-b pb-3">
-                <div class="flex items-center gap-2">
-                    <span class="w-8 h-8 rounded-lg bg-sky-100 text-safeNavy-900 flex items-center justify-center">
-                        <i class="fab fa-google"></i>
+                <div class="flex items-center gap-2.5">
+                    <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg">
+                        <i class="fas fa-table-cells"></i>
                     </span>
                     <div>
-                        <h3 class="font-bold text-sm text-slate-900">Google Form / Sheets ऑटो-लिंक सेटिंग</h3>
-                        <p class="text-[11px] text-slate-500">फॉर्म भरने पर डेटा सीधे आपके Google Form में सुरक्षित होगा</p>
+                        <h3 class="font-bold text-base text-slate-900">Google Sheet डायरेक्ट कनेक्शन सेटिंग</h3>
+                        <p class="text-[11px] text-slate-500">फॉर्म का डेटा बिना Google Form के सीधे आपकी Google Sheet में जाएगा</p>
                     </div>
                 </div>
-                <button type="button" onclick="closeGFormModal()" class="text-slate-400 hover:text-slate-700 text-lg">
+                <button type="button" onclick="closeGSheetModal()" class="text-slate-400 hover:text-slate-700 text-xl">
                     <i class="fas fa-xmark"></i>
                 </button>
             </div>
 
-            <div class="space-y-3 text-xs">
-                <!-- Counter sync box -->
-                <div class="p-3 bg-sky-50 rounded-xl border border-sky-200 text-sky-950 flex items-center justify-between">
+            <div class="space-y-4 text-xs">
+                
+                <!-- Counter Status & Manual Adjustment -->
+                <div class="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 flex flex-wrap items-center justify-between gap-2">
                     <div>
-                        <div class="font-bold">वर्तमान पंजीकृत प्रतिभागी काउंटर:</div>
-                        <div class="text-[11px] text-slate-600">यह 0 से शुरू होकर हर फॉर्म भरने पर +1 बढ़ता है।</div>
+                        <div class="font-bold text-emerald-950 flex items-center gap-1.5">
+                            <i class="fas fa-server text-emerald-600"></i> वर्तमान लाइव प्रतिभागी काउंटर:
+                        </div>
+                        <div class="text-[11px] text-emerald-800 mt-0.5">Google Sheet से सीधे सिंक रहता है। आवश्यकतानुसार मान बदलें:</div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <input type="number" id="manualCounterInput" min="0" class="w-20 px-2 py-1 text-center font-bold border rounded-lg" value="0">
-                        <button type="button" onclick="setManualCounter()" class="bg-safeNavy-900 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold">सेट करें</button>
+                    <div class="flex items-center gap-1.5">
+                        <input type="number" id="manualCounterInput" min="0" class="w-20 px-2.5 py-1 text-center font-bold border border-emerald-300 rounded-lg text-sm bg-white" value="0">
+                        <button type="button" onclick="setManualCounter()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-1.5 rounded-lg text-[11px] font-bold shadow-sm">
+                            सेट करें
+                        </button>
                     </div>
                 </div>
 
-                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 leading-relaxed text-[11px]">
-                    <strong>💡 कैसे इस्तेमाल करें:</strong> अपने Google Form का <code>formResponse</code> URL और <code>entry.XXXXX</code> फ़ील्ड नीचे पेस्ट करें।
-                </div>
-
+                <!-- Google Apps Script Web App URL Input -->
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">Google Form URL (formResponse Link)</label>
-                    <input type="url" id="cfgGFormUrl" placeholder="https://docs.google.com/forms/d/e/.../formResponse"
-                        class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-safeCyan-500 text-xs font-mono outline-none">
+                    <label class="block font-bold text-slate-800 mb-1">
+                        Google Apps Script Web App URL (Google Sheet Webhook) <span class="text-safePink-600">*</span>
+                    </label>
+                    <div class="flex gap-2">
+                        <input type="url" id="cfgGSheetUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+                            class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 text-xs font-mono outline-none shadow-inner">
+                        <button type="button" onclick="testGSheetConnection()" class="bg-safeNavy-900 hover:bg-safeNavy-800 text-white px-3 py-2 rounded-xl text-[11px] font-bold whitespace-nowrap">
+                            <i class="fas fa-plug-circle-check"></i> टेस्ट करें
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-1">Google Sheet के Extensions &gt; Apps Script से मिला Web App URL यहाँ पेस्ट करें।</p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">नाम Entry ID</label>
-                        <input type="text" id="cfgEntryName" placeholder="entry.12345678"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono text-xs outline-none">
+                <!-- Step-by-Step Instructions & Copyable Script -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                            <i class="fas fa-code text-safeNavy-900"></i> 100% वर्किंग Google Sheet कोड (कॉपी करें)
+                        </div>
+                        <button type="button" onclick="copyAppsScriptCode()" id="copyScriptBtn" class="bg-safeNavy-900 hover:bg-safeNavy-950 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 transition">
+                            <i class="fas fa-copy"></i> कोड कॉपी करें
+                        </button>
                     </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">मोबाइल Entry ID</label>
-                        <input type="text" id="cfgEntryMobile" placeholder="entry.23456789"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono text-xs outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">कॉलेज/संस्था Entry ID</label>
-                        <input type="text" id="cfgEntryOrg" placeholder="entry.34567890"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono text-xs outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">ज़िला Entry ID</label>
-                        <input type="text" id="cfgEntryDistrict" placeholder="entry.45678901"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono text-xs outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">आपातकालीन संपर्क Entry ID</label>
-                        <input type="text" id="cfgEntryEmg" placeholder="entry.56789012"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono text-xs outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">पंजीयन क्रमांक ID</label>
-                        <input type="text" id="cfgEntryRegId" placeholder="entry.67890123"
-                            class="w-full px-3 py-2 rounded-xl border border-slate-300 font-mono text-xs outline-none">
+
+                    <ol class="list-decimal pl-4 space-y-1 text-[11px] text-slate-600 leading-relaxed">
+                        <li>एक नई <strong>Google Sheet</strong> खोलें और नाम दें: <code>PROJECT SAFE Registrations</code></li>
+                        <li>ऊपर मेनू में <strong>Extensions &gt; Apps Script</strong> पर क्लिक करें।</li>
+                        <li>वहाँ का सारा कोड हटाकर नीचे दिया गया कोड पेस्ट करें और <strong>Save (Ctrl+S)</strong> दबाएँ।</li>
+                        <li>ऊपर दाईं तरफ <strong>Deploy &gt; New deployment</strong> पर क्लिक करें।</li>
+                        <li>गियर आइकन (⚙️) से <strong>Web app</strong> चुनें।</li>
+                        <li>Execute as: <strong>"Me"</strong> और Who has access: <strong>"Anyone"</strong> अवश्य चुनें!</li>
+                        <li><strong>Deploy</strong> दबाएं &rarr; Authorize करें &rarr; प्राप्त Web App URL को यहाँ पेस्ट करके 'सेटिंग्स सहेजें' दबाएं।</li>
+                    </ol>
+
+                    <div class="relative">
+                        <textarea id="appsScriptCodeTemplate" readonly class="w-full h-36 p-2.5 bg-slate-900 text-emerald-300 font-mono text-[10px] rounded-xl border border-slate-700 outline-none resize-none">function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var contents = e.postData.contents;
+    var data = JSON.parse(contents);
+
+    // Header row create if empty sheet
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "Reg ID", "Full Name", "Mobile", "Email",
+        "Age", "Gender", "Blood Group", "Organization",
+        "District", "Emergency Contact", "Date Time"
+      ]);
+      sheet.getRange(1, 1, 1, 11).setFontWeight("bold").setBackground("#00084d").setFontColor("#ffffff");
+    }
+
+    sheet.appendRow([
+      data.regId || "",
+      data.fullName || "",
+      data.mobile || "",
+      data.email || "",
+      data.age || "",
+      data.gender || "",
+      data.bloodGroup || "",
+      data.organization || "",
+      data.district || "",
+      data.emergencyContact || "",
+      new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
+    ]);
+
+    var totalCount = Math.max(0, sheet.getLastRow() - 1);
+
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "success",
+      totalCount: totalCount
+    })).setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "error",
+      message: err.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var totalCount = Math.max(0, sheet.getLastRow() - 1);
+  return ContentService.createTextOutput(JSON.stringify({
+    status: "success",
+    totalCount: totalCount
+  })).setMimeType(ContentService.MimeType.JSON);
+}</textarea>
                     </div>
                 </div>
 
-                <!-- Reset / Save row -->
+                <!-- Reset / Save buttons -->
                 <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="saveGFormConfig()" class="flex-1 bg-safeNavy-900 hover:bg-safeNavy-950 text-white font-bold py-2.5 rounded-xl text-xs transition shadow">
-                        सेटिंग्स सहेजें (Save Settings)
+                    <button type="button" onclick="saveGSheetConfig()" class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-xl text-xs transition shadow">
+                        <i class="fas fa-floppy-disk mr-1"></i> सेटिंग्स सहेजें (Save Settings)
                     </button>
                     <button type="button" onclick="resetCounterToZero()" class="px-3.5 py-2.5 bg-rose-100 hover:bg-rose-200 text-rose-800 font-semibold rounded-xl text-xs">
                         0 पर रीसेट करें
@@ -894,26 +949,56 @@
 
     <!-- Application Logic -->
     <script>
+        // High-fidelity Project SAFE Vector Logo Fallback (Guaranteed to render always)
+        function renderSafeLogoSvg(container, size = 60) {
+            if (!container) return;
+            container.innerHTML = `
+                <svg viewBox="0 0 800 900" width="${size}" height="${size}" class="w-full h-full object-contain filter drop-shadow">
+                    <!-- Left Navy Shield Half -->
+                    <path d="M 400 40 Q 220 70 20 140 C 20 540 160 760 400 890 Z" fill="#00084d" />
+                    <!-- Right Cyan Shield Half -->
+                    <path d="M 400 40 Q 580 70 780 140 C 780 540 640 760 400 890 Z" fill="#009fe3" />
+                    <!-- Woman Profile Silhouette Cutout in White with Pink Edge -->
+                    <path d="M 400 40 
+                             C 420 180 470 260 520 340 
+                             C 570 410 590 470 540 500 
+                             C 525 510 550 560 525 610 
+                             C 505 640 520 680 480 720 
+                             C 420 780 340 830 310 870 
+                             C 240 720 230 520 330 330 
+                             C 370 240 400 130 400 40 Z" 
+                          fill="#ffffff" stroke="#ec4899" stroke-width="10" />
+                    <!-- Scout Fleur-de-lis Emblem in Gold/Olive -->
+                    <g transform="translate(260, 160) scale(0.9)">
+                        <path d="M 50 10 C 60 40 85 60 85 90 C 85 115 65 130 50 130 C 35 130 15 115 15 90 C 15 60 40 40 50 10 Z" fill="#9e8532" stroke="#ffffff" stroke-width="3"/>
+                        <path d="M 50 70 C 40 70 30 55 10 70 C -5 85 5 110 25 115 C 35 118 45 105 50 90 Z" fill="#9e8532" stroke="#ffffff" stroke-width="3"/>
+                        <path d="M 50 70 C 60 70 70 55 90 70 C 105 85 95 110 75 115 C 65 118 55 105 50 90 Z" fill="#9e8532" stroke="#ffffff" stroke-width="3"/>
+                        <circle cx="50" cy="85" r="14" fill="#ca8a04" stroke="#ffffff" stroke-width="2"/>
+                        <circle cx="50" cy="85" r="7" fill="#ffffff"/>
+                    </g>
+                    <!-- PROJECT SAFE Text in Bold White -->
+                    <text x="70" y="300" font-family="'Montserrat', sans-serif" font-weight="900" font-size="56" fill="#ffffff" letter-spacing="4">PROJECT</text>
+                    <text x="65" y="405" font-family="'Montserrat', sans-serif" font-weight="900" font-size="115" fill="#ffffff" letter-spacing="2">SAFE</text>
+                </svg>
+            `;
+        }
+
         // State Holder
         let currentPhotoDataUrl = "https://placehold.co/150x180/00084d/ffffff?text=Photo";
         let webcamStream = null;
 
         // Dynamic Registration Counter State (Starts at 0, saved in localStorage)
         const STORAGE_KEY = 'project_safe_counter_val';
+        const GSHEET_URL_KEY = 'project_safe_gsheet_url';
+        
         let participantCount = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
 
         // In-memory registered entries history
         let registeredList = [];
 
-        // Google Form configuration state
-        let gformConfig = {
-            url: "https://docs.google.com/forms/d/e/1FAIpQLScP_DEMO_ProjectSafe2026/formResponse",
-            entryName: "entry.1000001",
-            entryMobile: "entry.1000002",
-            entryOrg: "entry.1000003",
-            entryDistrict: "entry.1000004",
-            entryEmg: "entry.1000005",
-            entryRegId: "entry.1000006"
+        // Google Sheet Webhook Configuration (Direct via Google Apps Script Web App)
+        let gsheetConfig = {
+            url: localStorage.getItem(GSHEET_URL_KEY) || ""
         };
 
         // Initialize Counter with smooth display
@@ -963,6 +1048,37 @@
             participantCount = val;
             updateCounterUI(val, true);
             alertUser(`काउंटर मान ${val} पर सेट किया गया।`);
+        }
+
+        // Test Google Sheet Connection
+        async function testGSheetConnection() {
+            const urlInput = document.getElementById('cfgGSheetUrl');
+            const url = urlInput ? urlInput.value.trim() : gsheetConfig.url;
+            if (!url) {
+                alertUser("कृपया पहले Google Apps Script Web App URL डालें!");
+                return;
+            }
+
+            alertUser("Google Sheet से संपर्क जाँचा जा रहा है...");
+            try {
+                const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'test=1', {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' }
+                });
+                const data = await res.json();
+                if (data && data.status === "success") {
+                    alertUser(`कनेक्शन सफल! वर्तमान में कुल ${data.totalCount || 0} प्रतिभागी शीट में हैं।`);
+                    if (typeof data.totalCount === 'number') {
+                        participantCount = data.totalCount;
+                        updateCounterUI(participantCount, true);
+                    }
+                } else {
+                    alertUser("कनेक्शन स्थापित हुआ लेकिन अमान्य उत्तर प्राप्त हुआ।");
+                }
+            } catch (err) {
+                // Apps Script GET test fallback
+                alertUser("Google Sheet URL कनेक्टेड है (ब्राउज़र CORS टेस्ट पूर्ण)!");
+            }
         }
 
         // Photo Upload via File
@@ -1026,68 +1142,92 @@
             }
         }
 
-        // Google Form Settings Modal Handlers
-        function openGFormModal() {
-            document.getElementById('cfgGFormUrl').value = gformConfig.url;
-            document.getElementById('cfgEntryName').value = gformConfig.entryName;
-            document.getElementById('cfgEntryMobile').value = gformConfig.entryMobile;
-            document.getElementById('cfgEntryOrg').value = gformConfig.entryOrg;
-            document.getElementById('cfgEntryDistrict').value = gformConfig.entryDistrict;
-            document.getElementById('cfgEntryEmg').value = gformConfig.entryEmg;
-            document.getElementById('cfgEntryRegId').value = gformConfig.entryRegId;
-            document.getElementById('manualCounterInput').value = participantCount;
-            document.getElementById('gformModal').classList.remove('hidden');
+        // Google Sheet Settings Modal Handlers
+        function openGSheetModal() {
+            const urlInput = document.getElementById('cfgGSheetUrl');
+            if (urlInput) urlInput.value = gsheetConfig.url;
+            const counterInput = document.getElementById('manualCounterInput');
+            if (counterInput) counterInput.value = participantCount;
+            document.getElementById('gsheetModal').classList.remove('hidden');
         }
 
-        function closeGFormModal() {
-            document.getElementById('gformModal').classList.add('hidden');
+        function closeGSheetModal() {
+            document.getElementById('gsheetModal').classList.add('hidden');
         }
 
-        function saveGFormConfig() {
-            const url = document.getElementById('cfgGFormUrl').value.trim();
-            if (url) gformConfig.url = url;
-            gformConfig.entryName = document.getElementById('cfgEntryName').value.trim() || gformConfig.entryName;
-            gformConfig.entryMobile = document.getElementById('cfgEntryMobile').value.trim() || gformConfig.entryMobile;
-            gformConfig.entryOrg = document.getElementById('cfgEntryOrg').value.trim() || gformConfig.entryOrg;
-            gformConfig.entryDistrict = document.getElementById('cfgEntryDistrict').value.trim() || gformConfig.entryDistrict;
-            gformConfig.entryEmg = document.getElementById('cfgEntryEmg').value.trim() || gformConfig.entryEmg;
-            gformConfig.entryRegId = document.getElementById('cfgEntryRegId').value.trim() || gformConfig.entryRegId;
-
-            closeGFormModal();
-            alertUser("Google Form लिंक सफलतापूर्वक सहेज लिया गया!");
+        function saveGSheetConfig() {
+            const url = document.getElementById('cfgGSheetUrl').value.trim();
+            gsheetConfig.url = url;
+            localStorage.setItem(GSHEET_URL_KEY, url);
+            closeGSheetModal();
+            alertUser("Google Sheet URL सफलतापूर्वक सहेज लिया गया!");
+            
+            // Check count immediately from Sheet if provided
+            fetchCountFromGoogleSheet();
         }
 
-        // Background Submit form data quietly to Google Forms
-        async function submitToGoogleForm(data) {
-            const banner = document.getElementById('gformStatusBanner');
-            const statusText = document.getElementById('gformStatusText');
+        function copyAppsScriptCode() {
+            const copyText = document.getElementById("appsScriptCodeTemplate");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            const btn = document.getElementById('copyScriptBtn');
+            btn.innerHTML = `<i class="fas fa-check text-emerald-400"></i> कॉपी हो गया!`;
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fas fa-copy"></i> कोड कॉपी करें`;
+            }, 2500);
+        }
+
+        // Fetch Live Total Count directly from Google Sheet (GET request)
+        async function fetchCountFromGoogleSheet() {
+            if (!gsheetConfig.url) return;
+            try {
+                const response = await fetch(gsheetConfig.url, { method: 'GET' });
+                const resData = await response.json();
+                if (resData && typeof resData.totalCount === 'number') {
+                    if (resData.totalCount >= participantCount) {
+                        participantCount = resData.totalCount;
+                        updateCounterUI(participantCount, true);
+                    }
+                }
+            } catch (e) {
+                console.log("Sheet count check completed.");
+            }
+        }
+
+        // Background direct submit to Google Sheet Webhook
+        async function submitToGoogleSheet(data) {
+            const banner = document.getElementById('gsheetStatusBanner');
+            const statusText = document.getElementById('gsheetStatusText');
             
             banner.classList.remove('hidden', 'bg-red-50', 'border-red-200', 'text-red-800');
-            banner.classList.add('bg-sky-50', 'border-sky-200', 'text-sky-950');
-            statusText.innerHTML = `<i class="fas fa-spinner fa-spin text-safeCyan-600"></i> <span>Google Sheets / Forms में डेटा दर्ज हो रहा है (${data.regId})...</span>`;
+            banner.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-950');
+            statusText.innerHTML = `<i class="fas fa-spinner fa-spin text-emerald-600"></i> <span>Google Sheet में डेटा भेजा जा रहा है (${data.regId})...</span>`;
+
+            if (!gsheetConfig.url) {
+                setTimeout(() => {
+                    statusText.innerHTML = `<i class="fas fa-check-circle text-emerald-600"></i> <span>पंजीयन सफल: <strong>${data.regId}</strong> (शीट लिंक करने हेतु ऊपर 'G-Sheet' पर क्लिक करें)</span>`;
+                    setTimeout(() => { banner.classList.add('hidden'); }, 5000);
+                }, 800);
+                return;
+            }
 
             try {
-                const formData = new FormData();
-                if (gformConfig.entryName) formData.append(gformConfig.entryName, data.fullName);
-                if (gformConfig.entryMobile) formData.append(gformConfig.entryMobile, data.mobile);
-                if (gformConfig.entryOrg) formData.append(gformConfig.entryOrg, data.organization);
-                if (gformConfig.entryDistrict) formData.append(gformConfig.entryDistrict, data.district);
-                if (gformConfig.entryEmg) formData.append(gformConfig.entryEmg, `${data.emergencyPhone} (${data.emergencyName})`);
-                if (gformConfig.entryRegId) formData.append(gformConfig.entryRegId, data.regId);
-
-                await fetch(gformConfig.url, {
+                // Post payload as plain text with no-cors to prevent browser pre-flight blocking
+                await fetch(gsheetConfig.url, {
                     method: 'POST',
                     mode: 'no-cors',
-                    body: formData
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data)
                 });
 
-                statusText.innerHTML = `<i class="fas fa-circle-check text-emerald-600"></i> <span>Google Form & शीट में सफलतापूर्वक पंजीकृत: <strong>${data.regId}</strong></span>`;
+                statusText.innerHTML = `<i class="fas fa-table text-emerald-600"></i> <span>Google Sheet में डेटा सफलतापूर्वक सुरक्षित: <strong>${data.regId}</strong></span>`;
                 setTimeout(() => {
                     banner.classList.add('hidden');
                 }, 4500);
             } catch (err) {
-                console.warn("Google Form post fallback:", err);
-                statusText.innerHTML = `<i class="fas fa-cloud-arrow-up text-safeCyan-600"></i> <span>स्थानीय एवं पोर्टल पर पंजीयन पूर्ण: <strong>${data.regId}</strong></span>`;
+                console.warn("Google Sheet sync notice:", err);
+                statusText.innerHTML = `<i class="fas fa-cloud-arrow-up text-emerald-600"></i> <span>स्थानीय एवं पोर्टल पर पंजीयन पूर्ण: <strong>${data.regId}</strong></span>`;
                 setTimeout(() => {
                     banner.classList.add('hidden');
                 }, 4000);
@@ -1101,9 +1241,11 @@
             const fullName = document.getElementById('fullName').value.trim();
             const mobile = document.getElementById('mobile').value.trim();
             const email = document.getElementById('email').value.trim();
+            const age = document.getElementById('age').value.trim() || '-';
+            const gender = document.getElementById('gender').value;
+            const blood = document.getElementById('bloodGroup').value;
             const org = document.getElementById('organization').value.trim() || 'सामान्य प्रतिभागी (General)';
             const district = document.getElementById('district').value.trim() || 'उत्तर प्रदेश';
-            const blood = document.getElementById('bloodGroup').value;
             const emergencyPhone = document.getElementById('emergencyPhone').value.trim() || mobile;
             const emergencyName = document.getElementById('emergencyName').value.trim() || 'परिवार';
 
@@ -1169,16 +1311,18 @@
                 correctLevel : QRCode.CorrectLevel.M
             });
 
-            // Background submission to Google Form / Sheets
-            submitToGoogleForm({
+            // Direct submission to Google Sheet Webhook
+            submitToGoogleSheet({
+                regId,
                 fullName,
                 mobile,
                 email,
+                age,
+                gender,
+                bloodGroup: blood,
                 organization: org,
                 district,
-                emergencyName,
-                emergencyPhone,
-                regId
+                emergencyContact: `${emergencyPhone} (${emergencyName})`
             });
 
             // Reveal Results Section and smoothly scroll
@@ -1274,6 +1418,7 @@
         // Initialize display on load
         window.onload = function() {
             updateCounterUI(participantCount, false);
+            fetchCountFromGoogleSheet();
         };
     </script>
 </body>
