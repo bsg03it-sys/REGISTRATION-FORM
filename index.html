@@ -196,7 +196,7 @@
                     </span>
                 </div>
 
-                <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-5">
+                <form id="regForm" onsubmit="handleRegistration(event)" novalidate class="space-y-5">
                     
                     <!-- Full Name -->
                     <div>
@@ -207,7 +207,7 @@
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
                                 <i class="fas fa-user"></i>
                             </span>
-                            <input type="text" id="fullName" required placeholder="जैसे: अंजली शर्मा / Anjali Sharma" 
+                            <input type="text" id="fullName" placeholder="जैसे: अंजली शर्मा / Anjali Sharma" 
                                 class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 focus:border-crimson-700 text-sm outline-none transition">
                         </div>
                     </div>
@@ -222,7 +222,7 @@
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
                                     <i class="fas fa-phone"></i>
                                 </span>
-                                <input type="tel" id="mobile" required pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर"
+                                <input type="text" id="mobile" placeholder="मोबाइल नंबर (जैसे: 9876543210)"
                                     class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 focus:border-crimson-700 text-sm outline-none transition">
                             </div>
                         </div>
@@ -246,14 +246,14 @@
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                                 आयु (Age) <span class="text-red-500">*</span>
                             </label>
-                            <input type="number" id="age" min="10" max="100" required placeholder="जैसे: 22"
+                            <input type="number" id="age" min="1" max="120" placeholder="जैसे: 22"
                                 class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                                 लिंग (Gender) <span class="text-red-500">*</span>
                             </label>
-                            <select id="gender" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition bg-white">
+                            <select id="gender" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition bg-white">
                                 <option value="Female">महिला (Female)</option>
                                 <option value="Male">पुरुष (Male / Ally)</option>
                                 <option value="Other">अन्य (Other)</option>
@@ -286,7 +286,7 @@
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
                                     <i class="fas fa-building-columns"></i>
                                 </span>
-                                <input type="text" id="organization" required placeholder="विश्वविद्यालय / कॉलेज / संस्था"
+                                <input type="text" id="organization" placeholder="विश्वविद्यालय / कॉलेज / संस्था"
                                     class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition">
                             </div>
                         </div>
@@ -298,7 +298,7 @@
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
                                     <i class="fas fa-location-dot"></i>
                                 </span>
-                                <input type="text" id="district" required placeholder="जैसे: लखनऊ, उत्तर प्रदेश"
+                                <input type="text" id="district" placeholder="जैसे: लखनऊ, उत्तर प्रदेश"
                                     class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition">
                             </div>
                         </div>
@@ -307,16 +307,16 @@
                     <!-- Emergency Contact Section -->
                     <div class="p-4 bg-rose-50/70 border border-rose-200 rounded-2xl">
                         <div class="flex items-center gap-2 mb-3 text-crimson-900 font-bold text-xs uppercase tracking-wide">
-                            <i class="fas fa-truck-medical text-crimson-700"></i> आपातकालीन संपर्क विवरण (Emergency Contact) <span class="text-red-500">*</span>
+                            <i class="fas fa-truck-medical text-crimson-700"></i> आपातकालीन संपर्क विवरण (Emergency Contact)
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <input type="text" id="emergencyName" required placeholder="अभिभावक/संबंधी का नाम (Relation Name)"
-                                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-xs outline-none bg-white">
+                                <input type="text" id="emergencyName" placeholder="अभिभावक/संबंधी का नाम (Relation Name)"
+                                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-xs outline-none bg-white">
                             </div>
                             <div>
-                                <input type="tel" id="emergencyPhone" required pattern="[0-9]{10}" placeholder="आपातकालीन मोबाइल नंबर (10 अंक)"
-                                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-xs outline-none bg-white">
+                                <input type="text" id="emergencyPhone" placeholder="आपातकालीन मोबाइल नंबर"
+                                    class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-xs outline-none bg-white">
                             </div>
                         </div>
                     </div>
@@ -824,18 +824,19 @@
 
             const fullName = document.getElementById('fullName').value.trim();
             const mobile = document.getElementById('mobile').value.trim();
-            const org = document.getElementById('organization').value.trim();
-            const district = document.getElementById('district').value.trim();
+            const org = document.getElementById('organization').value.trim() || 'सामान्य प्रतिभागी (General)';
+            const district = document.getElementById('district').value.trim() || 'उत्तर प्रदेश';
             const blood = document.getElementById('bloodGroup').value;
-            const emergencyPhone = document.getElementById('emergencyPhone').value.trim();
-            const emergencyName = document.getElementById('emergencyName').value.trim();
+            const emergencyPhone = document.getElementById('emergencyPhone').value.trim() || mobile;
+            const emergencyName = document.getElementById('emergencyName').value.trim() || 'परिवार';
 
-            if (!document.getElementById('pledgeAccepted').checked) {
-                alertUser("कृपया सुरक्षा प्रतिज्ञा (Pledge) स्वीकार करें।");
+            if (!fullName) {
+                alertUser("कृपया अपना पूरा नाम दर्ज करें।");
+                document.getElementById('fullName').focus();
                 return;
             }
 
-            // Generate unique Registration Code: WSC-UP-2026-XXXX
+            // Generate unique Registration Code: WSC-2026-XXXX
             const randomCode = Math.floor(1000 + Math.random() * 9000);
             const regId = `WSC-2026-${randomCode}`;
             const today = new Date();
@@ -848,7 +849,7 @@
             document.getElementById('idCardOrg').textContent = org;
             document.getElementById('idCardDistrict').textContent = district;
             document.getElementById('idCardBlood').textContent = blood;
-            document.getElementById('idCardEmergency').textContent = `${emergencyPhone} (${emergencyName.split(' ')[0]})`;
+            document.getElementById('idCardEmergency').textContent = `${emergencyPhone} ${emergencyName ? '(' + emergencyName + ')' : ''}`;
 
             // Populate Certificate Elements
             document.getElementById('certParticipantPhoto').src = currentPhotoDataUrl;
@@ -892,7 +893,7 @@
 
             // Increment Counter visually
             const counter = document.getElementById('counterDisplay');
-            counter.innerText = "48,933+";
+            if (counter) counter.innerText = "48,933+";
         }
 
         // Tab Switcher between ID Card and Certificate
