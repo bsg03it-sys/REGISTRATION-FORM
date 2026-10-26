@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>महिला सुरक्षा अभियान | पंजीयन, पहचान-पत्र एवं प्रमाण पत्र</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Rozha One / Noto Sans Devanagari -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Great+Vibes&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- html2canvas for instant HD card/certificate download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        crimson: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                            950: '#4c0519',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        navy: {
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'Noto Sans Devanagari', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
+                        cursive: ['Great Vibes', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+            background-color: #fdf6f7;
+        }
+
+        /* Certificate Ornate Border */
+        .cert-border {
+            border: 14px double #881337;
+            outline: 3px solid #d97706;
+            outline-offset: -8px;
+            background: radial-gradient(circle at center, #ffffff 60%, #fffbf0 100%);
+            position: relative;
+        }
+        .cert-corner {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-color: #d97706;
+        }
+
+        /* Hologram Sticker effect on ID */
+        .hologram {
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,215,0,0.5) 25%, rgba(0,255,255,0.4) 50%, rgba(255,105,180,0.4) 75%, rgba(255,255,255,0.5) 100%);
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
+        }
+
+        /* Print Specific Styling */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-area, #printable-area * {
+                visibility: visible;
+            }
+            #printable-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                background: white !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #be123c;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Top Navigation / Helpline Bar -->
+    <header class="bg-gradient-to-r from-crimson-950 via-crimson-900 to-navy-950 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs md:text-sm">
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center justify-center p-1.5 bg-red-600 rounded-full animate-pulse text-white text-xs">
+                    <i class="fas fa-shield-halved"></i>
+                </span>
+                <span class="font-bold tracking-wide text-amber-300">आपातकालीन हेल्पलाइन (24x7 Help):</span>
+                <div class="hidden sm:flex items-center space-x-3 font-semibold text-white">
+                    <span class="bg-black/30 px-2 py-0.5 rounded border border-white/20">🚨 112 (Police)</span>
+                    <span class="bg-black/30 px-2 py-0.5 rounded border border-white/20">👩 1090 (Women Power Line)</span>
+                    <span class="bg-black/30 px-2 py-0.5 rounded border border-white/20">📞 181 (Women Helpline)</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="prefillSampleData()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold px-3 py-1 rounded text-xs transition shadow-sm flex items-center gap-1.5">
+                    <i class="fas fa-magic"></i> टेस्ट डेटा भरें (Auto Fill Demo)
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Banner Header -->
+        <div class="border-t border-white/10 bg-black/20 backdrop-blur-sm py-4">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-crimson-700 p-0.5 shadow-md flex items-center justify-center">
+                        <div class="w-full h-full bg-crimson-900 rounded-[14px] flex items-center justify-center text-amber-300 text-2xl font-black">
+                            <i class="fas fa-hand-fist"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-amber-400/20 text-amber-300 text-[11px] font-bold px-2 py-0.5 rounded-full border border-amber-400/40">राष्ट्रीय अभियान 2026</span>
+                            <span class="text-xs text-rose-200">मिशन शक्ति & नारी सम्मान</span>
+                        </div>
+                        <h1 class="text-xl md:text-2xl font-extrabold tracking-tight text-white">महिला सुरक्षा अभियान • ऑनलाइन पंजीयन</h1>
+                        <p class="text-xs text-rose-200/80">Women Safety & Empowerment Campaign • Official Registration Portal</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6 text-center text-xs">
+                    <div class="bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur">
+                        <div class="text-amber-300 font-black text-lg" id="counterDisplay">48,932+</div>
+                        <div class="text-gray-300 text-[10px]">पंजीकृत प्रतिभागी</div>
+                    </div>
+                    <div class="bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 backdrop-blur">
+                        <div class="text-emerald-400 font-black text-lg">100%</div>
+                        <div class="text-gray-300 text-[10px]">डिजिटल वेरिफिकेशन</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow">
+        
+        <!-- Flash Alert / Info Banner -->
+        <div class="mb-8 p-4 bg-gradient-to-r from-rose-100 via-amber-50 to-rose-100 border-l-4 border-crimson-700 rounded-xl shadow-sm flex items-start justify-between gap-3 text-slate-700">
+            <div class="flex items-start gap-3">
+                <i class="fas fa-bullhorn text-crimson-700 text-xl mt-0.5"></i>
+                <div class="text-xs md:text-sm">
+                    <strong class="font-bold text-crimson-900">सशक्त नारी, सुरक्षित समाज!</strong> इस अभियान में भाग लेकर आत्मरक्षा, साइबर सुरक्षा कानून और आपातकालीन सुरक्षा व्यवस्था की जानकारी प्राप्त करें। फॉर्म सबमिट करते ही आपका <strong>अधिकृत डिजिटल पहचान पत्र (Identity Card)</strong> और <strong>सहभागिता प्रमाण पत्र (Participation Certificate)</strong> तुरंत तैयार हो जाएगा।
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- LEFT COLUMN: Registration Form (7 cols) -->
+            <div id="formContainer" class="lg:col-span-7 bg-white rounded-3xl shadow-xl border border-rose-100 p-6 md:p-8">
+                <div class="border-b border-rose-100 pb-4 mb-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-crimson-950 flex items-center gap-2">
+                            <i class="fas fa-id-card-clip text-crimson-700"></i> प्रतिभागी पंजीकरण फॉर्म
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">कृपया सभी विवरण सही-सही भरें (सभी फ़ील्ड अनिवार्य हैं)</p>
+                    </div>
+                    <span class="text-xs font-semibold bg-rose-50 text-crimson-700 border border-rose-200 px-3 py-1 rounded-full">
+                        चरण 1/2: पंजीयन
+                    </span>
+                </div>
+
+                <form id="regForm" onsubmit="handleRegistration(event)" class="space-y-5">
+                    
+                    <!-- Full Name -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                            पूरा नाम (Full Name) <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <input type="text" id="fullName" required placeholder="जैसे: अंजली शर्मा / Anjali Sharma" 
+                                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 focus:border-crimson-700 text-sm outline-none transition">
+                        </div>
+                    </div>
+
+                    <!-- Contact & Email (2 columns) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                मोबाइल नंबर (Mobile No.) <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <input type="tel" id="mobile" required pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 focus:border-crimson-700 text-sm outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                ईमेल पता (Email ID)
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input type="email" id="email" placeholder="example@gmail.com"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 focus:border-crimson-700 text-sm outline-none transition">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Age, Gender, Blood Group (3 columns) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                आयु (Age) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="number" id="age" min="10" max="100" required placeholder="जैसे: 22"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                लिंग (Gender) <span class="text-red-500">*</span>
+                            </label>
+                            <select id="gender" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition bg-white">
+                                <option value="Female">महिला (Female)</option>
+                                <option value="Male">पुरुष (Male / Ally)</option>
+                                <option value="Other">अन्य (Other)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                रक्त समूह (Blood Group)
+                            </label>
+                            <select id="bloodGroup" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition bg-white">
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- College / Organization & District -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                कॉलेज / संस्था / कार्यालय (Institute/Workplace) <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                                    <i class="fas fa-building-columns"></i>
+                                </span>
+                                <input type="text" id="organization" required placeholder="विश्वविद्यालय / कॉलेज / संस्था"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                ज़िला एवं राज्य (District & State) <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                                    <i class="fas fa-location-dot"></i>
+                                </span>
+                                <input type="text" id="district" required placeholder="जैसे: लखनऊ, उत्तर प्रदेश"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-sm outline-none transition">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Contact Section -->
+                    <div class="p-4 bg-rose-50/70 border border-rose-200 rounded-2xl">
+                        <div class="flex items-center gap-2 mb-3 text-crimson-900 font-bold text-xs uppercase tracking-wide">
+                            <i class="fas fa-truck-medical text-crimson-700"></i> आपातकालीन संपर्क विवरण (Emergency Contact) <span class="text-red-500">*</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <input type="text" id="emergencyName" required placeholder="अभिभावक/संबंधी का नाम (Relation Name)"
+                                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-xs outline-none bg-white">
+                            </div>
+                            <div>
+                                <input type="tel" id="emergencyPhone" required pattern="[0-9]{10}" placeholder="आपातकालीन मोबाइल नंबर (10 अंक)"
+                                    class="w-full px-3.5 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-crimson-700 text-xs outline-none bg-white">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photo Upload / Camera Preview -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                            पासपोर्ट साइज़ फ़ोटो (Participant Photo) <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex flex-col sm:flex-row items-center gap-4 p-4 border-2 border-dashed border-rose-200 rounded-2xl bg-slate-50/50 hover:bg-rose-50/40 transition">
+                            <!-- Photo Preview Box -->
+                            <div class="relative w-24 h-28 border-2 border-slate-300 rounded-xl overflow-hidden bg-slate-200 flex items-center justify-center shadow-inner flex-shrink-0">
+                                <img id="previewImg" src="https://placehold.co/150x180/881337/ffffff?text=Photo" alt="User Photo" class="w-full h-full object-cover">
+                                <div id="liveWebcamBadge" class="hidden absolute top-1 right-1 bg-red-600 text-white text-[9px] px-1 py-0.5 rounded font-bold">LIVE</div>
+                            </div>
+
+                            <div class="flex-grow space-y-2 text-center sm:text-left">
+                                <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
+                                    <label class="cursor-pointer bg-crimson-900 hover:bg-crimson-800 text-white text-xs font-medium px-4 py-2 rounded-xl transition shadow flex items-center gap-1.5">
+                                        <i class="fas fa-cloud-arrow-up"></i> फ़ोटो अपलोड करें
+                                        <input type="file" id="photoInput" accept="image/*" class="hidden" onchange="previewFile(event)">
+                                    </label>
+                                    <button type="button" onclick="startWebcamModal()" class="bg-navy-900 hover:bg-slate-800 text-white text-xs font-medium px-3.5 py-2 rounded-xl transition shadow flex items-center gap-1.5">
+                                        <i class="fas fa-camera"></i> कैमरा से लें
+                                    </button>
+                                </div>
+                                <p class="text-[11px] text-slate-500">JPG, PNG या WEBP समर्थित। पासपोर्ट साइज़ स्पष्ट चेहरा अपलोड करें।</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Women Safety Pledge Checkbox -->
+                    <div class="p-3.5 bg-amber-50 rounded-xl border border-amber-200">
+                        <label class="flex items-start gap-3 cursor-pointer select-none">
+                            <input type="checkbox" id="pledgeAccepted" required class="mt-1 w-4 h-4 text-crimson-700 rounded border-gray-300 focus:ring-crimson-700">
+                            <span class="text-xs text-slate-700 leading-relaxed">
+                                <strong class="text-slate-900">सुरक्षा प्रतिज्ञा (Pledge):</strong> मैं समाज में नारी सम्मान, सुरक्षा और सशक्तिकरण के प्रति सदैव सजग रहने, किसी भी उत्पीड़न के विरुद्ध आवाज उठाने तथा कानून और हेल्पलाइन का सहयोग लेने की शपथ लेता/लेती हूँ।
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-2">
+                        <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-crimson-800 via-rose-700 to-crimson-900 hover:from-crimson-900 hover:to-rose-800 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg hover:shadow-rose-300/50 transition transform active:scale-[0.99] flex items-center justify-center gap-2 text-base">
+                            <i class="fas fa-shield-cat text-amber-300"></i> पंजीकरण करें एवं ID/प्रमाणपत्र प्राप्त करें
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RIGHT COLUMN: Preview & Guidelines (5 cols) -->
+            <div class="lg:col-span-5 space-y-6">
+                <!-- Status Card -->
+                <div class="bg-gradient-to-br from-navy-950 to-crimson-950 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-amber-400/10 rounded-full blur-2xl"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-wider text-amber-300 font-bold bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+                            अभियान विशेषताएँ
+                        </span>
+                        <i class="fas fa-award text-amber-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">पंजीकरण के मुख्य लाभ</h3>
+                    <ul class="space-y-2 text-xs text-slate-200">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-circle-check text-emerald-400"></i> आधिकारिक फोटो पहचान पत्र (Lanyard Ready Smart ID)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-circle-check text-emerald-400"></i> डिजिटल सत्यापित सहभागिता प्रमाण पत्र (Gold Embellished)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-circle-check text-emerald-400"></i> व्यक्तिगत आपातकालीन QR कोड (Instant Scan to Reach Family)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-circle-check text-emerald-400"></i> कानूनी अधिकार, साइबर सेल व हेल्पलाइन डायरेक्टरी तक पहुंच
+                        </li>
+                    </ul>
+
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-300">
+                        <span>प्रमाण पत्र प्रारूप: <strong>ISO 9001:2015</strong></span>
+                        <span class="text-amber-400 font-semibold"><i class="fas fa-bolt"></i> तुरंत डाउनलोड</span>
+                    </div>
+                </div>
+
+                <!-- Emergency Helpline Quick Directory Card -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg border border-slate-100">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                        <i class="fas fa-tower-broadcast text-rose-600"></i> आवश्यक महिला सुरक्षा हेल्पलाइन
+                    </h4>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 bg-red-50 rounded-xl border border-red-100">
+                            <span class="text-red-700 font-bold block text-sm">1090</span>
+                            <span class="text-slate-600 text-[11px]">वूमेन पावर लाइन (WPL)</span>
+                        </div>
+                        <div class="p-3 bg-blue-50 rounded-xl border border-blue-100">
+                            <span class="text-blue-700 font-bold block text-sm">112</span>
+                            <span class="text-slate-600 text-[11px]">अखिल भारतीय आपातकालीन</span>
+                        </div>
+                        <div class="p-3 bg-purple-50 rounded-xl border border-purple-100">
+                            <span class="text-purple-700 font-bold block text-sm">181</span>
+                            <span class="text-slate-600 text-[11px]">महिला हेल्पलाइन (वन स्टॉप)</span>
+                        </div>
+                        <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                            <span class="text-emerald-700 font-bold block text-sm">1930</span>
+                            <span class="text-slate-600 text-[11px]">साइबर क्राइम हेल्पलाइन</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Preview Mockup teaser -->
+                <div class="bg-rose-50/50 rounded-3xl p-5 border border-dashed border-rose-300 text-center">
+                    <i class="fas fa-certificate text-crimson-700 text-3xl mb-2 animate-bounce"></i>
+                    <p class="text-xs font-semibold text-slate-700">फॉर्म भरने के तुरंत बाद नीचे आपका ID कार्ड और प्रमाण पत्र प्रदर्शित होगा जिसे आप PDF या Image में सहेज सकते हैं।</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- GENERATED RESULT SECTION: ID & CERTIFICATE -->
+        <!-- ========================================== -->
+        <div id="resultsSection" class="hidden mt-12 pt-8 border-t-2 border-rose-200">
+            
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="inline-block bg-emerald-100 text-emerald-800 font-bold text-xs px-3.5 py-1 rounded-full mb-2">
+                    <i class="fas fa-check-circle"></i> पंजीयन सफलतापूर्वक पूर्ण हुआ
+                </span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-navy-950">
+                    आपका पहचान पत्र एवं सहभागिता प्रमाण पत्र
+                </h2>
+                <p class="text-xs md:text-sm text-slate-600 mt-1">
+                    नीचे दिए गए टैब से अपना पहचान-पत्र (ID Card) या प्रमाण-पत्र (Certificate) चुनें और डाउनलोड/प्रिंट करें।
+                </p>
+            </div>
+
+            <!-- View Switcher Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex p-1.5 bg-slate-200/80 rounded-2xl shadow-inner gap-1">
+                    <button id="tabIdBtn" onclick="switchTab('idcard')" class="px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-crimson-800 text-white shadow">
+                        <i class="fas fa-address-card"></i> पहचान पत्र (ID Card)
+                    </button>
+                    <button id="tabCertBtn" onclick="switchTab('certificate')" class="px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-700 hover:text-slate-900">
+                        <i class="fas fa-ribbon"></i> प्रमाण पत्र (Certificate)
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 1: ID CARD VIEW -->
+            <div id="idCardTabContent" class="space-y-6">
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-3 no-print">
+                    <button onclick="downloadElementAsPNG('idCardBadgeWrapper', 'Women_Safety_ID_Card')" class="bg-crimson-800 hover:bg-crimson-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-2">
+                        <i class="fas fa-file-image"></i> ID कार्ड डाउनलोड करें (HD Image)
+                    </button>
+                    <button onclick="window.print()" class="bg-navy-900 hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-2">
+                        <i class="fas fa-print"></i> प्रिंट करें (Print)
+                    </button>
+                </div>
+
+                <!-- Vertical Smart ID Card Badge Container -->
+                <div class="flex justify-center p-2">
+                    <div id="idCardBadgeWrapper" class="w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-300 relative flex flex-col">
+                        
+                        <!-- Lanyard Hole Slot Graphic -->
+                        <div class="w-full flex justify-center pt-3 pb-1 bg-gradient-to-r from-crimson-950 via-crimson-900 to-navy-950">
+                            <div class="w-14 h-3 bg-white/40 rounded-full border border-black/30"></div>
+                        </div>
+
+                        <!-- Card Top Header -->
+                        <div class="bg-gradient-to-r from-crimson-950 via-crimson-900 to-navy-950 text-white text-center px-4 pt-2 pb-4 relative">
+                            <div class="flex items-center justify-between text-[9px] uppercase tracking-wider text-amber-300 font-semibold mb-1">
+                                <span>Govt. Recognized Drive</span>
+                                <span>2026-27</span>
+                            </div>
+                            <h3 class="font-bold text-sm tracking-wide text-amber-200">महिला सुरक्षा अभियान</h3>
+                            <p class="text-[10px] text-rose-200">WOMEN SAFETY EMPOWERMENT CAMPAIGN</p>
+                            <span class="inline-block mt-1 bg-amber-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                                अधिकृत प्रतिभागी (PARTICIPANT)
+                            </span>
+                        </div>
+
+                        <!-- Photo & Details Body -->
+                        <div class="p-5 flex flex-col items-center flex-grow bg-white relative">
+                            <!-- Hologram Seal -->
+                            <div class="hologram absolute top-3 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[10px] font-black text-slate-800 border border-amber-300">
+                                🛡️
+                            </div>
+
+                            <!-- Photo Box with Gold Border -->
+                            <div class="w-28 h-32 rounded-2xl p-1 bg-gradient-to-br from-amber-400 to-crimson-800 shadow-md mb-3">
+                                <img id="idCardPhoto" src="" alt="Participant Photo" class="w-full h-full object-cover rounded-xl bg-slate-100">
+                            </div>
+
+                            <!-- Name & Reg ID -->
+                            <h4 id="idCardName" class="text-base font-extrabold text-navy-950 text-center leading-tight">
+                                प्रतिभागी का नाम
+                            </h4>
+                            <div id="idCardRegNo" class="text-xs font-mono font-bold text-crimson-700 bg-rose-50 px-2.5 py-1 rounded-md border border-rose-200 mt-1">
+                                WSC-2026-0000
+                            </div>
+
+                            <!-- Info Grid -->
+                            <div class="w-full mt-4 space-y-1.5 text-xs text-slate-700 border-t border-b border-slate-100 py-3">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500 text-[11px]">संस्था/कॉलेज:</span>
+                                    <span id="idCardOrg" class="font-semibold text-right truncate max-w-[170px] text-[11px]">-</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500 text-[11px]">ज़िला/स्थान:</span>
+                                    <span id="idCardDistrict" class="font-semibold text-right text-[11px]">-</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500 text-[11px]">रक्त समूह (Blood):</span>
+                                    <span id="idCardBlood" class="font-bold text-crimson-800 text-[11px]">O+</span>
+                                </div>
+                                <div class="flex justify-between bg-red-50 p-1.5 rounded-lg border border-red-100 mt-1">
+                                    <span class="text-red-700 font-bold text-[10px] flex items-center gap-1">
+                                        <i class="fas fa-phone-volume"></i> आपातकालीन:
+                                    </span>
+                                    <span id="idCardEmergency" class="font-mono font-bold text-red-900 text-[11px]">-</span>
+                                </div>
+                            </div>
+
+                            <!-- QR Code & Signature Row -->
+                            <div class="w-full flex items-center justify-between mt-3 pt-1">
+                                <div class="flex flex-col items-center">
+                                    <div id="idCardQRCode" class="p-1 bg-white border border-slate-200 rounded-lg shadow-sm"></div>
+                                    <span class="text-[8px] text-slate-500 mt-0.5">Scan to Verify</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="font-cursive text-base text-navy-950 font-bold tracking-wider">
+                                        Dr. V. Sharma
+                                    </div>
+                                    <div class="w-24 border-t border-slate-400 my-0.5"></div>
+                                    <span class="text-[8px] text-slate-500 uppercase font-semibold">अधिकृत हस्ताक्षर</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="bg-slate-900 text-white text-[9px] py-1.5 px-3 flex justify-between items-center">
+                            <span>Emergency Helpline: <strong>112 / 1090</strong></span>
+                            <span class="text-amber-400 font-mono font-bold">WS-PORTAL VERIFIED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: CERTIFICATE VIEW -->
+            <div id="certificateTabContent" class="space-y-6 hidden">
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-3 no-print">
+                    <button onclick="downloadElementAsPNG('certificateWrapper', 'Women_Safety_Participation_Certificate')" class="bg-crimson-800 hover:bg-crimson-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-2">
+                        <i class="fas fa-file-image"></i> प्रमाण पत्र डाउनलोड करें (HD Certificate)
+                    </button>
+                    <button onclick="window.print()" class="bg-navy-900 hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow transition flex items-center gap-2">
+                        <i class="fas fa-print"></i> प्रिंट करें (Print Certificate)
+                    </button>
+                </div>
+
+                <!-- Elegant Full-Size Certificate -->
+                <div class="flex justify-center p-2 overflow-x-auto">
+                    <div id="certificateWrapper" class="w-[880px] min-w-[880px] p-8 bg-white cert-border rounded-xl shadow-2xl relative text-slate-800">
+                        
+                        <!-- Watermark Logo -->
+                        <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                            <i class="fas fa-shield-halved text-[420px]"></i>
+                        </div>
+
+                        <!-- Header Emblems -->
+                        <div class="flex items-center justify-between border-b-2 border-amber-500/30 pb-4 mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-14 h-14 rounded-full bg-crimson-900 text-amber-300 flex items-center justify-center text-2xl shadow">
+                                    <i class="fas fa-hand-holding-heart"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] tracking-widest uppercase font-bold text-crimson-900">National Women Empowerment Initiative</p>
+                                    <h4 class="font-serif font-black text-lg text-navy-950">महिला सुरक्षा एवं सशक्तिकरण अभियान</h4>
+                                    <p class="text-[10px] text-slate-500 font-medium">पंजीकरण एवं सुरक्षा जागरूकता प्रकोष्ठ • 2026</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Participant Photo Thumbnail on Certificate -->
+                            <div class="flex items-center space-x-3 bg-amber-50/60 p-2 rounded-xl border border-amber-200">
+                                <img id="certParticipantPhoto" src="" alt="Participant" class="w-12 h-14 object-cover rounded-lg border border-amber-400 shadow-sm">
+                                <div class="text-right">
+                                    <div class="text-[9px] font-bold text-slate-400 uppercase">प्रमाण पत्र संख्या</div>
+                                    <div id="certRegNo" class="font-mono text-xs font-bold text-crimson-800">WSC-2026-XXXX</div>
+                                    <div id="certDateDisplay" class="text-[9px] text-slate-600 font-medium">दिनांक: 26-10-2026</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certificate Title -->
+                        <div class="text-center my-6">
+                            <div class="inline-block relative">
+                                <span class="text-xs uppercase tracking-[0.3em] font-bold text-amber-600">CERTIFICATE OF PARTICIPATION</span>
+                                <h2 class="font-serif text-3xl font-black text-crimson-950 mt-1 tracking-tight">
+                                    सहभागिता प्रमाण पत्र
+                                </h2>
+                                <div class="w-48 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mt-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Citation Body -->
+                        <div class="text-center px-8 space-y-4 max-w-2xl mx-auto text-slate-700">
+                            <p class="text-sm font-medium">यह प्रमाणित किया जाता है कि</p>
+                            
+                            <div id="certParticipantName" class="font-serif text-3xl font-extrabold text-navy-950 border-b-2 border-dotted border-crimson-400 pb-1 mx-auto max-w-md">
+                                प्रतिभागी का नाम
+                            </div>
+
+                            <p class="text-sm leading-relaxed text-slate-700 pt-2">
+                                संस्था <strong id="certOrg" class="text-slate-900 font-bold">कॉलेज / संस्था का नाम</strong>, ज़िला <strong id="certDistrict" class="text-slate-900 font-bold">स्थान</strong> ने <strong>'महिला सुरक्षा, आत्मरक्षा एवं जागरूकता अभियान 2026'</strong> में सक्रिय रूप से प्रतिभाग कर महिला अधिकारों की रक्षा तथा सुरक्षा प्रतिज्ञा को अंगीकार किया है।
+                            </p>
+
+                            <p class="text-xs text-slate-600 italic">
+                                "नारी सुरक्षा, सम्मान और स्वावलंबन समाज की प्रगति का आधार है।"
+                            </p>
+                        </div>
+
+                        <!-- Bottom Section: Official Seal & Signatures -->
+                        <div class="grid grid-cols-3 items-end mt-12 pt-4 px-6">
+                            
+                            <!-- QR Verification Code -->
+                            <div class="flex flex-col items-center">
+                                <div id="certQRCode" class="p-1 bg-white border border-slate-300 rounded shadow-sm"></div>
+                                <span class="text-[8px] font-mono text-slate-500 mt-1">सुरक्षा क्यूआर सत्यापन</span>
+                            </div>
+
+                            <!-- Golden Emblem Ribbon Graphic -->
+                            <div class="flex flex-col items-center justify-center">
+                                <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-yellow-200 border-4 border-amber-500 shadow-xl flex items-center justify-center text-crimson-950 text-2xl font-black relative">
+                                    <i class="fas fa-shield-heart"></i>
+                                    <div class="absolute -bottom-2 text-[8px] font-bold tracking-tighter bg-crimson-900 text-amber-200 px-2 py-0.5 rounded-full shadow">
+                                        VERIFIED
+                                    </div>
+                                </div>
+                                <span class="text-[9px] font-serif font-bold text-amber-800 uppercase tracking-widest mt-3">आधिकारिक मुहर</span>
+                            </div>
+
+                            <!-- Director Signatory -->
+                            <div class="text-center flex flex-col items-center">
+                                <div class="font-cursive text-2xl text-navy-950 font-bold">
+                                    Pooja Kashyap
+                                </div>
+                                <div class="w-36 border-t-2 border-slate-700 my-1"></div>
+                                <span class="text-[11px] font-bold text-slate-800">श्रीमती पूजा कश्यप</span>
+                                <span class="text-[9px] text-slate-500">निदेशक / मुख्य समन्वयक, महिला प्रकोष्ठ</span>
+                            </div>
+                        </div>
+
+                        <!-- Footer Legal -->
+                        <div class="mt-8 pt-3 border-t border-slate-200 text-center text-[9px] text-slate-400 flex justify-between items-center px-4">
+                            <span>मान्यता कोड: WSC/SEC/2026/IND</span>
+                            <span>यह एक कम्प्यूटरीकृत वैध डिजिटल प्रमाण पत्र है।</span>
+                            <span>हेल्पलाइन: 1090 / 112 / 181</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Camera Capture Modal -->
+    <div id="cameraModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-5 space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b pb-2">
+                <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                    <i class="fas fa-camera text-crimson-700"></i> लाइव फ़ोटो खींचें
+                </h3>
+                <button type="button" onclick="closeWebcamModal()" class="text-slate-400 hover:text-slate-700 text-lg">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="relative bg-black rounded-2xl overflow-hidden aspect-[4/3] flex items-center justify-center">
+                <video id="webcamVideo" autoplay playsinline class="w-full h-full object-cover"></video>
+                <canvas id="webcamCanvas" class="hidden"></canvas>
+            </div>
+
+            <div class="flex gap-2">
+                <button type="button" onclick="captureWebcamPhoto()" class="flex-1 bg-crimson-800 hover:bg-crimson-900 text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+                    <i class="fas fa-camera-retro"></i> फ़ोटो खींचें (Capture)
+                </button>
+                <button type="button" onclick="closeWebcamModal()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs">
+                    रद्द करें
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Printable Area for window.print() -->
+    <div id="printable-area" class="hidden"></div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800 mt-12 no-print">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div>
+                <p class="font-bold text-white text-sm">महिला सुरक्षा एवं सशक्तिकरण अभियान २०२६</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">नारी सुरक्षा, नारी सम्मान और स्वावलंबन के प्रति समर्पित एक सामाजिक पहल।</p>
+            </div>
+            <div class="flex items-center space-x-4 text-slate-300">
+                <span class="hover:text-amber-300 transition cursor-pointer">नियम व शर्तें</span>
+                <span>•</span>
+                <span class="hover:text-amber-300 transition cursor-pointer">गोपनीयता नीति</span>
+                <span>•</span>
+                <span class="hover:text-amber-300 transition cursor-pointer">सहायता केंद्र</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // State Holder
+        let currentPhotoDataUrl = "https://placehold.co/150x180/881337/ffffff?text=Photo";
+        let webcamStream = null;
+
+        // Auto Prefill Demo Data for rapid testing
+        function prefillSampleData() {
+            document.getElementById('fullName').value = "अनामिका सिंह (Anamika Singh)";
+            document.getElementById('mobile').value = "9876543210";
+            document.getElementById('email').value = "anamika.safety@gmail.com";
+            document.getElementById('age').value = "23";
+            document.getElementById('gender').value = "Female";
+            document.getElementById('bloodGroup').value = "B+";
+            document.getElementById('organization').value = "लखनऊ विश्वविद्यालय (University of Lucknow)";
+            document.getElementById('district').value = "लखनऊ, उत्तर प्रदेश";
+            document.getElementById('emergencyName').value = "श्री राजेश सिंह (पिता)";
+            document.getElementById('emergencyPhone').value = "9839012345";
+            document.getElementById('pledgeAccepted').checked = true;
+
+            // Sample placeholder avatar with avatar art
+            currentPhotoDataUrl = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80";
+            document.getElementById('previewImg').src = currentPhotoDataUrl;
+        }
+
+        // Photo Upload via File
+        function previewFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alertUser("फ़ोटो का आकार 5MB से कम होना चाहिए।");
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentPhotoDataUrl = e.target.result;
+                    document.getElementById('previewImg').src = currentPhotoDataUrl;
+                    document.getElementById('liveWebcamBadge').classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Live Camera Handlers
+        async function startWebcamModal() {
+            const modal = document.getElementById('cameraModal');
+            const video = document.getElementById('webcamVideo');
+            modal.classList.remove('hidden');
+
+            try {
+                webcamStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+                    audio: false
+                });
+                video.srcObject = webcamStream;
+            } catch (err) {
+                console.error("Camera access error:", err);
+                alertUser("कैमरा एक्सेस नहीं हो सका। कृपया फ़ोटो अपलोड विकल्प का उपयोग करें।");
+                closeWebcamModal();
+            }
+        }
+
+        function captureWebcamPhoto() {
+            const video = document.getElementById('webcamVideo');
+            const canvas = document.getElementById('webcamCanvas');
+            if (video && webcamStream) {
+                canvas.width = video.videoWidth || 320;
+                canvas.height = video.videoHeight || 240;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                currentPhotoDataUrl = canvas.toDataURL('image/jpeg');
+                document.getElementById('previewImg').src = currentPhotoDataUrl;
+                document.getElementById('liveWebcamBadge').classList.remove('hidden');
+                closeWebcamModal();
+            }
+        }
+
+        function closeWebcamModal() {
+            const modal = document.getElementById('cameraModal');
+            modal.classList.add('hidden');
+            if (webcamStream) {
+                webcamStream.getTracks().forEach(track => track.stop());
+                webcamStream = null;
+            }
+        }
+
+        // Form Submit handler
+        function handleRegistration(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const org = document.getElementById('organization').value.trim();
+            const district = document.getElementById('district').value.trim();
+            const blood = document.getElementById('bloodGroup').value;
+            const emergencyPhone = document.getElementById('emergencyPhone').value.trim();
+            const emergencyName = document.getElementById('emergencyName').value.trim();
+
+            if (!document.getElementById('pledgeAccepted').checked) {
+                alertUser("कृपया सुरक्षा प्रतिज्ञा (Pledge) स्वीकार करें।");
+                return;
+            }
+
+            // Generate unique Registration Code: WSC-UP-2026-XXXX
+            const randomCode = Math.floor(1000 + Math.random() * 9000);
+            const regId = `WSC-2026-${randomCode}`;
+            const today = new Date();
+            const formattedDate = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
+
+            // Populate ID Card Elements
+            document.getElementById('idCardPhoto').src = currentPhotoDataUrl;
+            document.getElementById('idCardName').textContent = fullName;
+            document.getElementById('idCardRegNo').textContent = regId;
+            document.getElementById('idCardOrg').textContent = org;
+            document.getElementById('idCardDistrict').textContent = district;
+            document.getElementById('idCardBlood').textContent = blood;
+            document.getElementById('idCardEmergency').textContent = `${emergencyPhone} (${emergencyName.split(' ')[0]})`;
+
+            // Populate Certificate Elements
+            document.getElementById('certParticipantPhoto').src = currentPhotoDataUrl;
+            document.getElementById('certParticipantName').textContent = fullName;
+            document.getElementById('certRegNo').textContent = regId;
+            document.getElementById('certDateDisplay').textContent = `दिनांक: ${formattedDate}`;
+            document.getElementById('certOrg').textContent = org;
+            document.getElementById('certDistrict').textContent = district;
+
+            // Generate QR Codes (Verification data)
+            const qrPayload = `https://womensafety.org/verify?id=${regId}&name=${encodeURIComponent(fullName)}&contact=${mobile}&emg=${emergencyPhone}`;
+            
+            // Generate for ID Card
+            const idQrDiv = document.getElementById('idCardQRCode');
+            idQrDiv.innerHTML = "";
+            new QRCode(idQrDiv, {
+                text: qrPayload,
+                width: 62,
+                height: 62,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.M
+            });
+
+            // Generate for Certificate
+            const certQrDiv = document.getElementById('certQRCode');
+            certQrDiv.innerHTML = "";
+            new QRCode(certQrDiv, {
+                text: qrPayload,
+                width: 72,
+                height: 72,
+                colorDark : "#881337",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.M
+            });
+
+            // Reveal Results Section and smoothly scroll
+            const resultsSection = document.getElementById('resultsSection');
+            resultsSection.classList.remove('hidden');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Increment Counter visually
+            const counter = document.getElementById('counterDisplay');
+            counter.innerText = "48,933+";
+        }
+
+        // Tab Switcher between ID Card and Certificate
+        function switchTab(tab) {
+            const idTab = document.getElementById('idCardTabContent');
+            const certTab = document.getElementById('certificateTabContent');
+            const tabIdBtn = document.getElementById('tabIdBtn');
+            const tabCertBtn = document.getElementById('tabCertBtn');
+
+            if (tab === 'idcard') {
+                idTab.classList.remove('hidden');
+                certTab.classList.add('hidden');
+
+                tabIdBtn.className = "px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-crimson-800 text-white shadow";
+                tabCertBtn.className = "px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-700 hover:text-slate-900";
+            } else {
+                certTab.classList.remove('hidden');
+                idTab.classList.add('hidden');
+
+                tabCertBtn.className = "px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 bg-crimson-800 text-white shadow";
+                tabIdBtn.className = "px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm transition flex items-center gap-2 text-slate-700 hover:text-slate-900";
+            }
+        }
+
+        // Download Canvas Element as Image
+        function downloadElementAsPNG(elementId, filename) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+
+            // Provide visual indicator
+            const originalCursor = document.body.style.cursor;
+            document.body.style.cursor = 'wait';
+
+            html2canvas(element, {
+                scale: 3, // High DPI for crisp printing quality
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: null,
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${filename}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                document.body.style.cursor = originalCursor;
+            }).catch(err => {
+                console.error("Download generation error:", err);
+                document.body.style.cursor = originalCursor;
+                alertUser("डाउनलोड करने में समस्या आई। कृपया पुनः प्रयास करें।");
+            });
+        }
+
+        // Custom Notification banner instead of alert()
+        function alertUser(msg) {
+            const banner = document.createElement('div');
+            banner.className = "fixed bottom-5 right-5 z-50 bg-crimson-900 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-amber-300 text-xs md:text-sm font-semibold transition-all transform duration-300";
+            banner.innerHTML = `<i class="fas fa-circle-exclamation text-amber-300 text-lg"></i> <span>${msg}</span>`;
+            document.body.appendChild(banner);
+            setTimeout(() => {
+                banner.style.opacity = '0';
+                setTimeout(() => banner.remove(), 300);
+            }, 3500);
+        }
+
+        // Hook Window Print event to ensure print content is neatly positioned
+        window.onbeforeprint = function() {
+            const printableArea = document.getElementById('printable-area');
+            const activeTabIsCert = !document.getElementById('certificateTabContent').classList.contains('hidden');
+            const sourceElementId = activeTabIsCert ? 'certificateWrapper' : 'idCardBadgeWrapper';
+            const sourceElem = document.getElementById(sourceElementId);
+
+            if (sourceElem) {
+                printableArea.innerHTML = '';
+                const clone = sourceElem.cloneNode(true);
+                clone.style.margin = '20px auto';
+                printableArea.appendChild(clone);
+                printableArea.classList.remove('hidden');
+            }
+        };
+
+        window.onafterprint = function() {
+            const printableArea = document.getElementById('printable-area');
+            printableArea.innerHTML = '';
+            printableArea.classList.add('hidden');
+        };
+    </script>
+</body>
+</html>
