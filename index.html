@@ -132,12 +132,8 @@
                 </div>
             </div>
             <div class="flex items-center gap-2.5">
-                <!-- Google Sheet Direct Integration Link -->
-                <button type="button" onclick="openGSheetModal()" class="bg-white/10 hover:bg-white/20 text-white font-medium px-3 py-1 rounded-lg text-xs transition border border-safeCyan-400/40 flex items-center gap-1.5 shadow-sm" title="Google Sheet डायरेक्ट सिंक सेटिंग्स">
-                    <i class="fas fa-table-cells text-emerald-400"></i> Google Sheet सिंक
-                </button>
-                <!-- Admin Panel Trigger Button -->
-                <button type="button" onclick="handleAdminTrigger()" id="adminNavBtn" class="bg-safePink-600 hover:bg-safePink-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm shadow-pink-600/30 border border-pink-400/40">
+                <!-- Admin Panel Trigger Button (G-Sheet button removed from public view) -->
+                <button type="button" onclick="handleAdminTrigger()" id="adminNavBtn" class="bg-safePink-600 hover:bg-safePink-700 text-white font-semibold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm shadow-pink-600/30 border border-pink-400/40">
                     <i class="fas fa-lock text-xs"></i> <span>एडमिन पैनल</span>
                 </button>
             </div>
@@ -149,11 +145,13 @@
                 
                 <!-- Logo & Campaign Title -->
                 <div class="flex items-center space-x-3.5">
-                    <!-- Project SAFE Logo Rendered with official brand image & SVG Fallback -->
-                    <div class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 drop-shadow-lg flex items-center justify-center p-1 bg-white/10 rounded-2xl border border-white/20 backdrop-blur-sm overflow-hidden" id="mainHeaderLogoContainer">
-                        <img src="safe city logo.jpg" alt="PROJECT SAFE Official Logo" 
-                             onerror="renderSafeLogoSvg(this.parentElement, 68)" 
-                             class="w-full h-full object-contain filter drop-shadow">
+                    <!-- Project SAFE Logo Slot (Ready for Admin Upload) -->
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex-shrink-0 drop-shadow-lg flex items-center justify-center p-1 bg-white/10 rounded-2xl border border-dashed border-white/30 backdrop-blur-sm overflow-hidden" id="mainHeaderLogoContainer">
+                        <img id="mainHeaderLogoImg" src="" alt="Campaign Logo" class="w-full h-full object-contain dynamic-project-logo hidden">
+                        <div id="mainHeaderLogoPlaceholder" class="flex flex-col items-center justify-center text-center text-white/70 p-1">
+                            <i class="fas fa-shield-halved text-safeCyan-400 text-xl md:text-2xl mb-1"></i>
+                            <span class="text-[9px] leading-tight font-medium">लोगो स्लॉट</span>
+                        </div>
                     </div>
 
                     <div>
@@ -168,7 +166,7 @@
                     </div>
                 </div>
 
-                <!-- Live Counter Tracker & Verification Badge -->
+                <!-- Live Counter Tracker & Verification Badge (Without public G-Sheet button) -->
                 <div class="flex items-center space-x-3 text-center text-xs">
                     <!-- Real-Time Counter Box (Starts at 0 and increments) -->
                     <div class="bg-white/10 px-4 py-2 rounded-2xl border border-safeCyan-400/30 backdrop-blur relative shadow-inner">
@@ -185,11 +183,6 @@
                         <div class="text-safePink-400 font-black text-xl md:text-2xl">100%</div>
                         <div class="text-slate-200 text-[10px] font-medium mt-0.5">डिजिटल वेरिफिकेशन</div>
                     </div>
-                    <!-- Direct G-Sheet Sync Modal Opener -->
-                    <button type="button" onclick="openGSheetModal()" title="Google Sheet सेटिंग्स एवं स्क्रिप्ट" class="bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 px-3 py-2 rounded-xl text-xs flex flex-col items-center justify-center transition">
-                        <i class="fas fa-table text-sm"></i>
-                        <span class="text-[9px] mt-0.5 font-bold">G-Sheet</span>
-                    </button>
                 </div>
 
             </div>
@@ -432,8 +425,9 @@
                         <span class="text-xs uppercase tracking-wider text-safeCyan-300 font-bold bg-white/10 px-3 py-1 rounded-full border border-safeCyan-400/30 flex items-center gap-1.5">
                             <i class="fas fa-shield-halved text-safePink-400"></i> PROJECT SAFE अभियान
                         </span>
-                        <div class="w-12 h-12 p-1 bg-white/10 rounded-xl border border-white/10 flex items-center justify-center">
-                            <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 42)" class="w-full h-full object-contain">
+                        <div class="w-12 h-12 p-1 bg-white/10 rounded-xl border border-white/15 flex items-center justify-center overflow-hidden" id="sideBannerLogoContainer">
+                            <img src="" alt="Logo" class="w-full h-full object-contain dynamic-project-logo hidden">
+                            <i class="fas fa-shield-cat text-safeCyan-400 text-lg dynamic-placeholder-icon"></i>
                         </div>
                     </div>
                     <h3 class="text-lg font-bold mb-2 font-montserrat">पंजीकरण के मुख्य लाभ</h3>
@@ -553,8 +547,9 @@
                             
                             <!-- Header Logo & Heading -->
                             <div class="flex items-center justify-center gap-2.5">
-                                <div class="w-10 h-10 flex-shrink-0 bg-white/15 p-1 rounded-xl border border-white/20 flex items-center justify-center" id="idCardLogoContainer">
-                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 34)" class="w-full h-full object-contain dynamic-project-logo">
+                                <div class="w-10 h-10 flex-shrink-0 bg-white/15 p-1 rounded-xl border border-white/20 flex items-center justify-center overflow-hidden" id="idCardLogoContainer">
+                                    <img src="" alt="Logo" class="w-full h-full object-contain dynamic-project-logo hidden">
+                                    <i class="fas fa-shield-halved text-safeCyan-300 text-base dynamic-placeholder-icon"></i>
                                 </div>
                                 <div class="text-left">
                                     <h3 class="font-extrabold text-sm tracking-wide text-white font-montserrat leading-none">
@@ -653,16 +648,19 @@
                 <div class="flex justify-center p-2 overflow-x-auto">
                     <div id="certificateWrapper" class="w-[880px] min-w-[880px] p-8 bg-white cert-border rounded-xl shadow-2xl relative text-slate-800 bg-cover bg-center transition-all">
                         
-                        <!-- Watermark Project SAFE Shield Logo -->
+                        <!-- Watermark Project SAFE Shield Logo (visible only after admin upload) -->
                         <div class="absolute inset-0 flex items-center justify-center opacity-[0.06] pointer-events-none" id="certWatermarkBox">
-                            <img src="safe city logo.jpg" alt="Watermark" onerror="renderSafeLogoSvg(this.parentElement, 360)" class="w-[380px] h-[380px] object-contain dynamic-project-logo">
+                            <img src="" alt="Watermark" class="w-[380px] h-[380px] object-contain dynamic-project-logo hidden">
                         </div>
 
                         <!-- Header Emblems with Official Project SAFE Logo -->
                         <div class="flex items-center justify-between border-b-2 border-sky-500/30 pb-4 mb-4">
                             <div class="flex items-center space-x-3.5">
-                                <div class="w-16 h-16 flex-shrink-0 drop-shadow p-1 bg-white rounded-xl border border-sky-200 flex items-center justify-center" id="certHeaderLogoContainer">
-                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 56)" class="w-full h-full object-contain dynamic-project-logo">
+                                <div class="w-16 h-16 flex-shrink-0 drop-shadow p-1 bg-white rounded-xl border border-sky-200 flex items-center justify-center overflow-hidden" id="certHeaderLogoContainer">
+                                    <img src="" alt="Logo" class="w-full h-full object-contain dynamic-project-logo hidden">
+                                    <div class="dynamic-placeholder-icon text-center text-slate-400">
+                                        <i class="fas fa-shield-halved text-safeNavy-900 text-2xl"></i>
+                                    </div>
                                 </div>
                                 <div>
                                     <p class="text-[10px] tracking-widest uppercase font-bold text-safeNavy-900">National Women Empowerment Initiative</p>
@@ -992,12 +990,12 @@ function doGet(e) {
                         <div class="flex items-center justify-between border-b border-sky-200 pb-3">
                             <div>
                                 <h3 class="font-bold text-sm text-safeNavy-950 flex items-center gap-2">
-                                    <i class="fas fa-shield-cat text-safeCyan-600"></i> आधिकारिक PROJECT SAFE लोगो बदलें
+                                    <i class="fas fa-shield-cat text-safeCyan-600"></i> आधिकारिक अभियान लोगो अपलोड करें
                                 </h3>
-                                <p class="text-[11px] text-slate-500">यह लोगो हेडर, आई.डी. कार्ड, सर्टिफिकेट और वॉटरमार्क में तुरंत अपडेट हो जाएगा।</p>
+                                <p class="text-[11px] text-slate-500">यहाँ से अपनी पसंद का लोगो अपलोड करें। यह हेडर, आई.डी. कार्ड, सर्टिफिकेट और वॉटरमार्क में स्वतः लग जाएगा।</p>
                             </div>
-                            <button type="button" onclick="resetToDefaultLogo()" class="text-[11px] text-rose-600 hover:underline font-semibold">
-                                <i class="fas fa-rotate-left"></i> डिफ़ॉल्ट वेक्टर लोगो पर रीसेट करें
+                            <button type="button" onclick="clearUploadedLogo()" class="text-[11px] text-rose-600 hover:underline font-semibold">
+                                <i class="fas fa-trash-can"></i> अपलोड किया लोगो हटाएँ
                             </button>
                         </div>
 
@@ -1005,7 +1003,11 @@ function doGet(e) {
                             <!-- Logo Preview Box -->
                             <div class="md:col-span-3 flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-sky-200 shadow-inner">
                                 <div class="w-24 h-24 flex items-center justify-center p-2 rounded-xl bg-slate-50 border border-slate-200 overflow-hidden" id="adminLogoPreviewBox">
-                                    <img id="adminCurrentLogoImg" src="safe city logo.jpg" onerror="renderSafeLogoSvg(this.parentElement, 70)" alt="Logo Preview" class="w-full h-full object-contain">
+                                    <img id="adminCurrentLogoImg" src="" alt="Logo Preview" class="w-full h-full object-contain hidden">
+                                    <div id="adminLogoEmptyMsg" class="text-center text-slate-400 p-2">
+                                        <i class="fas fa-image text-3xl mb-1 text-slate-300"></i>
+                                        <p class="text-[10px]">कोई लोगो अपलोड नहीं है</p>
+                                    </div>
                                 </div>
                                 <span class="text-[10px] text-slate-500 mt-2 font-semibold">वर्तमान लोगो प्रीव्यू</span>
                             </div>
@@ -1015,7 +1017,7 @@ function doGet(e) {
                                 <div>
                                     <label class="block font-bold text-slate-700 mb-1">फ़ाइल द्वारा नया लोगो अपलोड करें (PNG/JPG/SVG/WEBP)</label>
                                     <label class="cursor-pointer inline-flex items-center gap-2 bg-safeNavy-900 hover:bg-safeNavy-800 text-white px-4 py-2 rounded-xl font-bold transition">
-                                        <i class="fas fa-cloud-arrow-up text-safeCyan-400"></i> लोगो फ़ाइल चुनें
+                                        <i class="fas fa-cloud-arrow-up text-safeCyan-400"></i> लोगो फ़ाइल चुनें (Upload Logo)
                                         <input type="file" accept="image/*" class="hidden" onchange="handleAdminLogoUpload(event)">
                                     </label>
                                 </div>
@@ -1455,13 +1457,51 @@ function doGet(e) {
 
         // Apply branding config to DOM on start
         function applyBrandingToUI() {
-            // Logo replacement
-            if (brandingConfig.customLogoUrl) {
-                document.querySelectorAll('.dynamic-project-logo').forEach(img => {
+            const hasCustomLogo = Boolean(brandingConfig.customLogoUrl);
+
+            // Update all dynamic logo elements across Header, ID Card, Certificate, Watermark & Side Banner
+            document.querySelectorAll('.dynamic-project-logo').forEach(img => {
+                if (hasCustomLogo) {
                     img.src = brandingConfig.customLogoUrl;
-                });
-                const adminPreview = document.getElementById('adminCurrentLogoImg');
-                if (adminPreview) adminPreview.src = brandingConfig.customLogoUrl;
+                    img.classList.remove('hidden');
+                } else {
+                    img.src = '';
+                    img.classList.add('hidden');
+                }
+            });
+
+            // Toggle placeholder icons when no logo is set
+            document.querySelectorAll('.dynamic-placeholder-icon').forEach(icon => {
+                if (hasCustomLogo) {
+                    icon.classList.add('hidden');
+                } else {
+                    icon.classList.remove('hidden');
+                }
+            });
+
+            // Header Logo container specific toggle
+            const headerPlaceholder = document.getElementById('mainHeaderLogoPlaceholder');
+            if (headerPlaceholder) {
+                if (hasCustomLogo) {
+                    headerPlaceholder.classList.add('hidden');
+                } else {
+                    headerPlaceholder.classList.remove('hidden');
+                }
+            }
+
+            // Admin panel logo preview
+            const adminPreviewImg = document.getElementById('adminCurrentLogoImg');
+            const adminEmptyMsg = document.getElementById('adminLogoEmptyMsg');
+            if (adminPreviewImg && adminEmptyMsg) {
+                if (hasCustomLogo) {
+                    adminPreviewImg.src = brandingConfig.customLogoUrl;
+                    adminPreviewImg.classList.remove('hidden');
+                    adminEmptyMsg.classList.add('hidden');
+                } else {
+                    adminPreviewImg.src = '';
+                    adminPreviewImg.classList.add('hidden');
+                    adminEmptyMsg.classList.remove('hidden');
+                }
             }
 
             // ID Card BG
@@ -1506,11 +1546,12 @@ function doGet(e) {
             if (!display) return;
 
             localStorage.setItem(STORAGE_KEY, targetVal);
-
-            if (!animate) {
-                display.innerText = targetVal.toLocaleString('en-IN');
-                return;
-            }
+        function clearUploadedLogo() {
+            brandingConfig.customLogoUrl = "";
+            saveBrandingConfig();
+            applyBrandingToUI();
+            alertUser("अपलोड किया गया लोगो हटा दिया गया है।");
+        }
 
             const current = parseInt(display.innerText.replace(/[^0-9]/g, '')) || 0;
             const diff = targetVal - current;
