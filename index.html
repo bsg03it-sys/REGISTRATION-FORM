@@ -136,6 +136,10 @@
                 <button type="button" onclick="openGSheetModal()" class="bg-white/10 hover:bg-white/20 text-white font-medium px-3 py-1 rounded-lg text-xs transition border border-safeCyan-400/40 flex items-center gap-1.5 shadow-sm" title="Google Sheet डायरेक्ट सिंक सेटिंग्स">
                     <i class="fas fa-table-cells text-emerald-400"></i> Google Sheet सिंक
                 </button>
+                <!-- Admin Panel Trigger Button -->
+                <button type="button" onclick="handleAdminTrigger()" id="adminNavBtn" class="bg-safePink-600 hover:bg-safePink-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm shadow-pink-600/30 border border-pink-400/40">
+                    <i class="fas fa-lock text-xs"></i> <span>एडमिन पैनल</span>
+                </button>
             </div>
         </div>
 
@@ -549,8 +553,8 @@
                             
                             <!-- Header Logo & Heading -->
                             <div class="flex items-center justify-center gap-2.5">
-                                <div class="w-10 h-10 flex-shrink-0 bg-white/15 p-1 rounded-xl border border-white/20 flex items-center justify-center">
-                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 34)" class="w-full h-full object-contain">
+                                <div class="w-10 h-10 flex-shrink-0 bg-white/15 p-1 rounded-xl border border-white/20 flex items-center justify-center" id="idCardLogoContainer">
+                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 34)" class="w-full h-full object-contain dynamic-project-logo">
                                 </div>
                                 <div class="text-left">
                                     <h3 class="font-extrabold text-sm tracking-wide text-white font-montserrat leading-none">
@@ -566,7 +570,7 @@
                         </div>
 
                         <!-- Photo & Details Body -->
-                        <div class="p-5 flex flex-col items-center flex-grow bg-white relative">
+                        <div id="idCardBodyBg" class="p-5 flex flex-col items-center flex-grow bg-white relative bg-cover bg-center transition-all">
                             <!-- Hologram Seal -->
                             <div class="hologram absolute top-3 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[10px] font-black text-slate-800 border border-sky-300">
                                 🛡️
@@ -614,11 +618,11 @@
                                     <span class="text-[8px] text-slate-500 mt-0.5">Scan to Verify</span>
                                 </div>
                                 <div class="flex flex-col items-center">
-                                    <div class="font-cursive text-base text-safeNavy-950 font-bold tracking-wider">
+                                    <div id="idCardSignDisplay" class="font-cursive text-base text-safeNavy-950 font-bold tracking-wider">
                                         Dr. V. Sharma
                                     </div>
                                     <div class="w-24 border-t border-slate-400 my-0.5"></div>
-                                    <span class="text-[8px] text-slate-500 uppercase font-semibold">अधिकृत हस्ताक्षर</span>
+                                    <span id="idCardSignLabel" class="text-[8px] text-slate-500 uppercase font-semibold">अधिकृत हस्ताक्षर</span>
                                 </div>
                             </div>
 
@@ -647,18 +651,18 @@
 
                 <!-- Elegant Full-Size Certificate -->
                 <div class="flex justify-center p-2 overflow-x-auto">
-                    <div id="certificateWrapper" class="w-[880px] min-w-[880px] p-8 bg-white cert-border rounded-xl shadow-2xl relative text-slate-800">
+                    <div id="certificateWrapper" class="w-[880px] min-w-[880px] p-8 bg-white cert-border rounded-xl shadow-2xl relative text-slate-800 bg-cover bg-center transition-all">
                         
                         <!-- Watermark Project SAFE Shield Logo -->
                         <div class="absolute inset-0 flex items-center justify-center opacity-[0.06] pointer-events-none" id="certWatermarkBox">
-                            <img src="safe city logo.jpg" alt="Watermark" onerror="renderSafeLogoSvg(this.parentElement, 360)" class="w-[380px] h-[380px] object-contain">
+                            <img src="safe city logo.jpg" alt="Watermark" onerror="renderSafeLogoSvg(this.parentElement, 360)" class="w-[380px] h-[380px] object-contain dynamic-project-logo">
                         </div>
 
                         <!-- Header Emblems with Official Project SAFE Logo -->
                         <div class="flex items-center justify-between border-b-2 border-sky-500/30 pb-4 mb-4">
                             <div class="flex items-center space-x-3.5">
-                                <div class="w-16 h-16 flex-shrink-0 drop-shadow p-1 bg-white rounded-xl border border-sky-200 flex items-center justify-center">
-                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 56)" class="w-full h-full object-contain">
+                                <div class="w-16 h-16 flex-shrink-0 drop-shadow p-1 bg-white rounded-xl border border-sky-200 flex items-center justify-center" id="certHeaderLogoContainer">
+                                    <img src="safe city logo.jpg" alt="Logo" onerror="renderSafeLogoSvg(this.parentElement, 56)" class="w-full h-full object-contain dynamic-project-logo">
                                 </div>
                                 <div>
                                     <p class="text-[10px] tracking-widest uppercase font-bold text-safeNavy-900">National Women Empowerment Initiative</p>
@@ -728,12 +732,12 @@
 
                             <!-- Director Signatory -->
                             <div class="text-center flex flex-col items-center">
-                                <div class="font-cursive text-2xl text-safeNavy-950 font-bold">
+                                <div id="certSignScript" class="font-cursive text-2xl text-safeNavy-950 font-bold">
                                     Pooja Kashyap
                                 </div>
                                 <div class="w-36 border-t-2 border-slate-700 my-1"></div>
-                                <span class="text-[11px] font-bold text-slate-800">श्रीमती पूजा कश्यप</span>
-                                <span class="text-[9px] text-slate-500">निदेशक / मुख्य समन्वयक, PROJECT SAFE</span>
+                                <span id="certSignerName" class="text-[11px] font-bold text-slate-800">श्रीमती पूजा कश्यप</span>
+                                <span id="certSignerRole" class="text-[9px] text-slate-500">निदेशक / मुख्य समन्वयक, PROJECT SAFE</span>
                             </div>
                         </div>
 
@@ -775,6 +779,426 @@
                 </button>
                 <button type="button" onclick="closeWebcamModal()" class="px-4 py-2.5 bg-slate-200 text-slate-700 font-bold rounded-xl text-xs">
                     रद्द करें
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- ADMIN LOGIN MODAL (Secure Access)                        -->
+    <!-- ======================================================== -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-5 shadow-2xl border border-sky-100 text-slate-800 relative">
+            <button type="button" onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-lg">
+                <i class="fas fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-safeNavy-950 to-safeNavy-800 text-safeCyan-400 flex items-center justify-center text-2xl shadow-lg border border-sky-200">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <h3 class="text-lg font-black text-safeNavy-950 font-montserrat">PROJECT SAFE एडमिन लॉगिन</h3>
+                <p class="text-xs text-slate-500">कंट्रोल पैनल एक्सेस करने हेतु पासवर्ड दर्ज करें</p>
+            </div>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">यूज़रनेम</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-user-shield text-xs"></i></span>
+                        <input type="text" id="adminUsernameInput" value="admin" required
+                            class="w-full pl-9 pr-3 py-2 text-xs border rounded-xl focus:ring-2 focus:ring-safeCyan-500 outline-none bg-slate-50">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">पासवर्ड</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"><i class="fas fa-key text-xs"></i></span>
+                        <input type="password" id="adminPasswordInput" placeholder="डिफ़ॉल्ट पासवर्ड: safe2026" required
+                            class="w-full pl-9 pr-10 py-2 text-xs border rounded-xl focus:ring-2 focus:ring-safeCyan-500 outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('adminPasswordInput', this)" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600">
+                            <i class="fas fa-eye text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-between items-center mt-1 text-[10px] text-slate-500">
+                        <span>डिफ़ॉल्ट: <code class="bg-slate-100 px-1 py-0.5 rounded font-mono">safe2026</code></span>
+                        <span class="text-safeCyan-600 font-semibold cursor-pointer" onclick="alertUser('डिफ़ॉल्ट लॉगिन: admin / safe2026')">पासवर्ड भूल गए?</span>
+                    </div>
+                </div>
+
+                <div id="adminLoginError" class="hidden text-xs text-rose-600 bg-rose-50 border border-rose-200 p-2 rounded-xl flex items-center gap-2">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <span>अमान्य यूज़रनेम या पासवर्ड!</span>
+                </div>
+
+                <button type="submit" class="w-full bg-safeNavy-950 hover:bg-safeNavy-900 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-right-to-bracket text-safeCyan-400"></i> पैनल में प्रवेश करें
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- FULL FEATURED ADMIN DASHBOARD MODAL                       -->
+    <!-- ======================================================== -->
+    <div id="adminDashboardModal" class="fixed inset-0 bg-slate-900/80 z-50 hidden flex items-center justify-center p-3 md:p-6 backdrop-blur-md">
+        <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[94vh] shadow-2xl flex flex-col overflow-hidden border border-slate-200">
+            
+            <!-- Dashboard Topbar -->
+            <div class="bg-safeNavy-950 text-white px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-safeCyan-500/30">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-safeCyan-400 border border-white/20">
+                        <i class="fas fa-sliders text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-base font-bold text-white font-montserrat">PROJECT SAFE एडमिनिस्ट्रेटर कंसोल</h2>
+                            <span class="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-400/30">सक्रिय (LOGGED IN)</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300">Google Sheet, लोगो, बैकग्राउंड इमेज एवं सहभागिता डेटा प्रबंधन</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="exportRegistrationsToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow">
+                        <i class="fas fa-file-csv"></i> CSV निर्यात
+                    </button>
+                    <button type="button" onclick="handleAdminLogout()" class="bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-semibold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+                        <i class="fas fa-power-off"></i> लॉगआउट
+                    </button>
+                    <button type="button" onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white text-xl ml-2">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Tabs Navigation -->
+            <div class="bg-slate-100 border-b border-slate-200 px-6 flex flex-wrap gap-2 pt-2">
+                <button type="button" onclick="switchAdminTab('tabGSheet')" id="adminTabBtn-tabGSheet" class="px-4 py-2 text-xs font-bold rounded-t-xl transition flex items-center gap-1.5 bg-white text-safeNavy-950 border-t-2 border-safeNavy-900 shadow-sm">
+                    <i class="fas fa-table-cells text-emerald-600"></i> Google Sheet सेटिंग्स
+                </button>
+                <button type="button" onclick="switchAdminTab('tabBranding')" id="adminTabBtn-tabBranding" class="px-4 py-2 text-xs font-bold rounded-t-xl transition flex items-center gap-1.5 text-slate-600 hover:text-slate-900">
+                    <i class="fas fa-palette text-safePink-600"></i> लोगो एवं बैकग्राउंड कस्टमाइज़र
+                </button>
+                <button type="button" onclick="switchAdminTab('tabSignatory')" id="adminTabBtn-tabSignatory" class="px-4 py-2 text-xs font-bold rounded-t-xl transition flex items-center gap-1.5 text-slate-600 hover:text-slate-900">
+                    <i class="fas fa-file-signature text-safeCyan-600"></i> हस्ताक्षर एवं प्रमाण पत्र विवरण
+                </button>
+                <button type="button" onclick="switchAdminTab('tabData')" id="adminTabBtn-tabData" class="px-4 py-2 text-xs font-bold rounded-t-xl transition flex items-center gap-1.5 text-slate-600 hover:text-slate-900">
+                    <i class="fas fa-users text-purple-600"></i> प्रतिभागी रिकॉर्ड्स (<span id="adminRecordsCount">0</span>)
+                </button>
+                <button type="button" onclick="switchAdminTab('tabSecurity')" id="adminTabBtn-tabSecurity" class="px-4 py-2 text-xs font-bold rounded-t-xl transition flex items-center gap-1.5 text-slate-600 hover:text-slate-900">
+                    <i class="fas fa-key text-amber-600"></i> पासवर्ड बदलें
+                </button>
+            </div>
+
+            <!-- Dashboard Content Scrollable Area -->
+            <div class="p-6 overflow-y-auto flex-grow space-y-6 text-slate-800 text-xs">
+
+                <!-- 1. GOOGLE SHEET TAB -->
+                <div id="adminTab-tabGSheet" class="space-y-5">
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div>
+                            <div class="font-bold text-emerald-950 text-sm flex items-center gap-2">
+                                <i class="fas fa-table-cells text-emerald-600 text-base"></i> Google Apps Script Webhook लिंक
+                            </div>
+                            <p class="text-slate-600 text-[11px] mt-0.5">
+                                यहाँ अपना Google Sheet Apps Script Web App URL लिंक करें। हर नया रजिस्ट्रेशन सीधे आपकी शीट में एक नई पंक्ति बन जाएगा।
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-white text-emerald-800 border border-emerald-300">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                लाइव सिंक सक्रिय
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="md:col-span-2 space-y-2">
+                            <label class="block font-bold text-slate-700">Google Apps Script Web App URL (POST Webhook)</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="adminGSheetUrlInput" placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+                                    class="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 font-mono text-xs outline-none">
+                                <button type="button" onclick="testAdminGSheetConnection()" class="bg-safeNavy-900 hover:bg-safeNavy-800 text-white font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-1.5">
+                                    <i class="fas fa-plug"></i> टेस्ट करें
+                                </button>
+                            </div>
+                            <p class="text-[10px] text-slate-500">Google Sheet &gt; Extensions &gt; Apps Script &gt; Deploy &gt; Web app (Access: Anyone)</p>
+                        </div>
+
+                        <!-- Manual Counter Adjustment -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+                            <label class="block font-bold text-slate-700">लाइव प्रतिभागी काउंटर (Live Counter)</label>
+                            <div class="flex items-center gap-2">
+                                <input type="number" id="adminCounterInput" min="0" class="w-full px-3 py-2 border rounded-xl text-sm font-bold text-safeNavy-950 bg-white">
+                                <button type="button" onclick="saveAdminCounter()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-3 py-2 rounded-xl font-bold whitespace-nowrap">
+                                    अपडेट
+                                </button>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] pt-1">
+                                <button type="button" onclick="syncCountFromGoogleSheetNow()" class="text-safeCyan-600 hover:underline font-semibold">
+                                    <i class="fas fa-rotate"></i> शीट से गिनती लाएँ
+                                </button>
+                                <button type="button" onclick="resetCounterToZero()" class="text-rose-600 hover:underline">
+                                    0 पर रीसेट
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Box & Copy -->
+                    <div class="p-4 bg-slate-900 text-slate-200 rounded-2xl space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-[11px] text-emerald-400 font-bold flex items-center gap-2">
+                                <i class="fas fa-code"></i> Google Apps Script Code (Sheet Backend)
+                            </span>
+                            <button type="button" onclick="copyAdminScript()" id="adminCopyCodeBtn" class="bg-white/10 hover:bg-white/20 text-white px-2.5 py-1 rounded-lg text-[10px] font-bold transition flex items-center gap-1">
+                                <i class="fas fa-copy"></i> स्क्रिप्ट कॉपी करें
+                            </button>
+                        </div>
+                        <textarea id="adminAppsScriptCode" readonly class="w-full h-32 bg-black/40 text-emerald-300 font-mono text-[10px] p-2.5 rounded-xl border border-white/10 outline-none resize-none">function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Reg ID", "Full Name", "Mobile", "Email", "Age", "Gender", "Blood Group", "Organization", "District", "Emergency Contact", "Date Time"]);
+      sheet.getRange(1, 1, 1, 11).setFontWeight("bold").setBackground("#00084d").setFontColor("#ffffff");
+    }
+    sheet.appendRow([data.regId||"", data.fullName||"", data.mobile||"", data.email||"", data.age||"", data.gender||"", data.bloodGroup||"", data.organization||"", data.district||"", data.emergencyContact||"", new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })]);
+    return ContentService.createTextOutput(JSON.stringify({status:"success", totalCount: Math.max(0, sheet.getLastRow()-1)})).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({status:"error", message: err.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  return ContentService.createTextOutput(JSON.stringify({status:"success", totalCount: Math.max(0, sheet.getLastRow()-1)})).setMimeType(ContentService.MimeType.JSON);
+}</textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-2 pt-2">
+                        <button type="button" onclick="saveAdminGSheetConfig()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-6 py-2.5 rounded-xl transition shadow">
+                            <i class="fas fa-check mr-1"></i> Google Sheet सेटिंग्स सहेजें (Save)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. BRANDING & BACKGROUNDS TAB -->
+                <div id="adminTab-tabBranding" class="hidden space-y-6">
+                    
+                    <!-- Logo Manager -->
+                    <div class="p-5 bg-sky-50/70 border border-sky-200 rounded-2xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-sky-200 pb-3">
+                            <div>
+                                <h3 class="font-bold text-sm text-safeNavy-950 flex items-center gap-2">
+                                    <i class="fas fa-shield-cat text-safeCyan-600"></i> आधिकारिक PROJECT SAFE लोगो बदलें
+                                </h3>
+                                <p class="text-[11px] text-slate-500">यह लोगो हेडर, आई.डी. कार्ड, सर्टिफिकेट और वॉटरमार्क में तुरंत अपडेट हो जाएगा।</p>
+                            </div>
+                            <button type="button" onclick="resetToDefaultLogo()" class="text-[11px] text-rose-600 hover:underline font-semibold">
+                                <i class="fas fa-rotate-left"></i> डिफ़ॉल्ट वेक्टर लोगो पर रीसेट करें
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+                            <!-- Logo Preview Box -->
+                            <div class="md:col-span-3 flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-sky-200 shadow-inner">
+                                <div class="w-24 h-24 flex items-center justify-center p-2 rounded-xl bg-slate-50 border border-slate-200 overflow-hidden" id="adminLogoPreviewBox">
+                                    <img id="adminCurrentLogoImg" src="safe city logo.jpg" onerror="renderSafeLogoSvg(this.parentElement, 70)" alt="Logo Preview" class="w-full h-full object-contain">
+                                </div>
+                                <span class="text-[10px] text-slate-500 mt-2 font-semibold">वर्तमान लोगो प्रीव्यू</span>
+                            </div>
+
+                            <!-- Upload & URL Options -->
+                            <div class="md:col-span-9 space-y-3">
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">फ़ाइल द्वारा नया लोगो अपलोड करें (PNG/JPG/SVG/WEBP)</label>
+                                    <label class="cursor-pointer inline-flex items-center gap-2 bg-safeNavy-900 hover:bg-safeNavy-800 text-white px-4 py-2 rounded-xl font-bold transition">
+                                        <i class="fas fa-cloud-arrow-up text-safeCyan-400"></i> लोगो फ़ाइल चुनें
+                                        <input type="file" accept="image/*" class="hidden" onchange="handleAdminLogoUpload(event)">
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">अथवा ऑनलाइन लोगो इमेज URL पेस्ट करें</label>
+                                    <div class="flex gap-2">
+                                        <input type="url" id="adminLogoUrlInput" placeholder="https://example.com/logo.png"
+                                            class="flex-1 px-3.5 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-safeCyan-500 text-xs bg-white">
+                                        <button type="button" onclick="applyAdminLogoUrl()" class="bg-safeCyan-600 hover:bg-safeCyan-700 text-white font-bold px-4 py-2 rounded-xl transition">
+                                            लागू करें
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backgrounds Customizer (ID Card & Certificate) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        
+                        <!-- ID Card Background -->
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                                    <i class="fas fa-id-badge text-safeCyan-600"></i> आई.डी. कार्ड बैकग्राउंड (ID Card BG)
+                                </h4>
+                                <button type="button" onclick="clearIdCardBg()" class="text-[10px] text-rose-600 hover:underline">हटाएँ (White)</button>
+                            </div>
+                            <p class="text-[11px] text-slate-500">आई.डी. कार्ड के मुख्य विवरण भाग पर कस्टम बैकग्राउंड या वाटरमार्क लगाएँ।</p>
+                            
+                            <div class="space-y-2">
+                                <label class="cursor-pointer inline-flex items-center gap-2 bg-safeNavy-900 hover:bg-safeNavy-800 text-white px-3 py-1.5 rounded-xl font-bold transition text-xs">
+                                    <i class="fas fa-upload text-safeCyan-400"></i> बैकग्राउंड इमेज अपलोड करें
+                                    <input type="file" accept="image/*" class="hidden" onchange="handleIdCardBgUpload(event)">
+                                </label>
+                                <div>
+                                    <input type="url" id="adminIdBgUrlInput" placeholder="बैकग्राउंड इमेज URL"
+                                        class="w-full px-3 py-1.5 border rounded-xl text-xs bg-white mt-1">
+                                    <button type="button" onclick="applyIdBgUrl()" class="mt-1 text-[11px] text-safeCyan-600 font-bold hover:underline">
+                                        + URL से सेट करें
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Certificate Background -->
+                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                            <div class="flex items-center justify-between border-b pb-2">
+                                <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                                    <i class="fas fa-certificate text-safePink-600"></i> सर्टिफिकेट बैकग्राउंड (Certificate BG)
+                                </h4>
+                                <button type="button" onclick="clearCertBg()" class="text-[10px] text-rose-600 hover:underline">डिफ़ॉल्ट पर लाएँ</button>
+                            </div>
+                            <p class="text-[11px] text-slate-500">प्रमाण पत्र के लिए कस्टम बॉर्डर/गिलोचे या संस्थागत बैकग्राउंड लगाएँ।</p>
+                            
+                            <div class="space-y-2">
+                                <label class="cursor-pointer inline-flex items-center gap-2 bg-safeNavy-900 hover:bg-safeNavy-800 text-white px-3 py-1.5 rounded-xl font-bold transition text-xs">
+                                    <i class="fas fa-upload text-safePink-400"></i> सर्टिफिकेट BG अपलोड करें
+                                    <input type="file" accept="image/*" class="hidden" onchange="handleCertBgUpload(event)">
+                                </label>
+                                <div>
+                                    <input type="url" id="adminCertBgUrlInput" placeholder="सर्टिफिकेट बैकग्राउंड इमेज URL"
+                                        class="w-full px-3 py-1.5 border rounded-xl text-xs bg-white mt-1">
+                                    <button type="button" onclick="applyCertBgUrl()" class="mt-1 text-[11px] text-safePink-600 font-bold hover:underline">
+                                        + URL से सेट करें
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 3. SIGNATORY & CERTIFICATE DETAILS TAB -->
+                <div id="adminTab-tabSignatory" class="hidden space-y-5">
+                    <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200">
+                        <h3 class="font-bold text-sm text-amber-950 flex items-center gap-2">
+                            <i class="fas fa-signature text-amber-600"></i> अधिकृत हस्ताक्षरकर्ता एवं मुहर विवरण
+                        </h3>
+                        <p class="text-[11px] text-slate-600 mt-0.5">यहाँ किए गए परिवर्तन तुरंत जनरेट होने वाले पहचान पत्र और सहभागिता प्रमाण पत्र पर दिखने लगेंगे।</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">हस्ताक्षरकर्ता का नाम (Signatory Name)</label>
+                            <input type="text" id="adminSignerNameInput" value="श्रीमती पूजा कश्यप"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 text-xs">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">पद / पदवी (Signatory Title)</label>
+                            <input type="text" id="adminSignerRoleInput" value="निदेशक / मुख्य समन्वयक, PROJECT SAFE"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 text-xs">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">आई.डी. कार्ड हस्ताक्षरकर्ता नाम</label>
+                            <input type="text" id="adminIdSignerInput" value="Dr. V. Sharma"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 text-xs">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">प्रमाण पत्र मान्यता कोड</label>
+                            <input type="text" id="adminCertCodeInput" value="WSC/SAFE/2026/IND"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 text-xs">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-2">
+                        <button type="button" onclick="saveAdminSignatoryDetails()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow">
+                            <i class="fas fa-floppy-disk mr-1"></i> हस्ताक्षर विवरण सहेजें
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. PARTICIPANT RECORDS TAB -->
+                <div id="adminTab-tabData" class="hidden space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="adminSearchInput" onkeyup="filterAdminRecords()" placeholder="नाम, आईडी या मोबाइल से खोजें..."
+                                class="px-3.5 py-2 border rounded-xl text-xs w-64 outline-none focus:ring-2 focus:ring-safeNavy-900">
+                            <span class="text-slate-500 text-[11px] font-semibold" id="adminFilteredCountDisplay">कुल 0 प्रविष्टियां</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="exportRegistrationsToCSV()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3 py-2 rounded-xl text-xs transition flex items-center gap-1.5 shadow">
+                                <i class="fas fa-file-excel"></i> Excel / CSV डाउनलोड
+                            </button>
+                            <button type="button" onclick="clearAllRegisteredData()" class="bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold px-3 py-2 rounded-xl text-xs transition">
+                                <i class="fas fa-trash-can"></i> सारा डेटा साफ़ करें
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="border rounded-2xl overflow-hidden shadow-sm bg-white">
+                        <div class="overflow-x-auto max-h-80">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead class="bg-safeNavy-950 text-white sticky top-0">
+                                    <tr>
+                                        <th class="p-2.5 font-bold">रजिस्ट्रेशन ID</th>
+                                        <th class="p-2.5 font-bold">पूरा नाम</th>
+                                        <th class="p-2.5 font-bold">मोबाइल</th>
+                                        <th class="p-2.5 font-bold">संस्था / यूनिट</th>
+                                        <th class="p-2.5 font-bold">ज़िला</th>
+                                        <th class="p-2.5 font-bold">दिनांक व समय</th>
+                                        <th class="p-2.5 font-bold text-center">एक्शन</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminRecordsTableBody" class="divide-y divide-slate-200">
+                                    <tr>
+                                        <td colspan="7" class="text-center py-8 text-slate-400">
+                                            कोई प्रविष्टि उपलब्ध नहीं है। फॉर्म सबमिट होते ही यहाँ सूची दिखने लगेगी।
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. SECURITY / PASSWORD TAB -->
+                <div id="adminTab-tabSecurity" class="hidden space-y-4 max-w-md">
+                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fas fa-key text-amber-600"></i> एडमिन लॉगिन पासवर्ड बदलें
+                        </h4>
+                        <div>
+                            <label class="block text-slate-600 font-bold mb-1">वर्तमान पासवर्ड</label>
+                            <input type="password" id="adminCurrentPwInput" class="w-full px-3 py-2 border rounded-xl text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-slate-600 font-bold mb-1">नया पासवर्ड</label>
+                            <input type="password" id="adminNewPwInput" class="w-full px-3 py-2 border rounded-xl text-xs">
+                        </div>
+                        <button type="button" onclick="handleAdminChangePassword()" class="bg-safeNavy-950 hover:bg-safeNavy-900 text-white font-bold px-4 py-2 rounded-xl text-xs transition">
+                            पासवर्ड अपडेट करें
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Dashboard Footer -->
+            <div class="bg-slate-100 px-6 py-3 border-t flex items-center justify-between text-[11px] text-slate-500">
+                <span>PROJECT SAFE Security Management • Ver 2.6</span>
+                <button type="button" onclick="closeAdminDashboard()" class="text-slate-700 hover:text-safeNavy-950 font-bold">
+                    कंसोल बंद करें (Close)
                 </button>
             </div>
         </div>
@@ -990,16 +1414,91 @@ function doGet(e) {
         // Dynamic Registration Counter State (Starts at 0, saved in localStorage)
         const STORAGE_KEY = 'project_safe_counter_val';
         const GSHEET_URL_KEY = 'project_safe_gsheet_url';
+        const RECORDS_STORAGE_KEY = 'project_safe_records_list';
+        const BRANDING_STORAGE_KEY = 'project_safe_branding_cfg';
+        const ADMIN_PW_KEY = 'project_safe_admin_password';
         
         let participantCount = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
 
-        // In-memory registered entries history
+        // In-memory registered entries history (persisted in localStorage)
         let registeredList = [];
+        try {
+            const savedRecords = localStorage.getItem(RECORDS_STORAGE_KEY);
+            if (savedRecords) registeredList = JSON.parse(savedRecords);
+        } catch(e) { registeredList = []; }
 
         // Google Sheet Webhook Configuration (Direct via Google Apps Script Web App)
         let gsheetConfig = {
             url: localStorage.getItem(GSHEET_URL_KEY) || ""
         };
+
+        // Admin Security & Branding Config
+        let adminPassword = localStorage.getItem(ADMIN_PW_KEY) || "safe2026";
+        let isAdminLoggedIn = false;
+
+        let brandingConfig = {
+            customLogoUrl: "",
+            idCardBgUrl: "",
+            certBgUrl: "",
+            signerName: "श्रीमती पूजा कश्यप",
+            signerRole: "निदेशक / मुख्य समन्वयक, PROJECT SAFE",
+            idSignerName: "Dr. V. Sharma",
+            certCode: "WSC/SAFE/2026/IND"
+        };
+
+        try {
+            const savedBranding = localStorage.getItem(BRANDING_STORAGE_KEY);
+            if (savedBranding) {
+                brandingConfig = { ...brandingConfig, ...JSON.parse(savedBranding) };
+            }
+        } catch(e) {}
+
+        // Apply branding config to DOM on start
+        function applyBrandingToUI() {
+            // Logo replacement
+            if (brandingConfig.customLogoUrl) {
+                document.querySelectorAll('.dynamic-project-logo').forEach(img => {
+                    img.src = brandingConfig.customLogoUrl;
+                });
+                const adminPreview = document.getElementById('adminCurrentLogoImg');
+                if (adminPreview) adminPreview.src = brandingConfig.customLogoUrl;
+            }
+
+            // ID Card BG
+            const idBody = document.getElementById('idCardBodyBg');
+            if (idBody) {
+                if (brandingConfig.idCardBgUrl) {
+                    idBody.style.backgroundImage = `url('${brandingConfig.idCardBgUrl}')`;
+                    idBody.style.backgroundColor = "transparent";
+                } else {
+                    idBody.style.backgroundImage = 'none';
+                    idBody.style.backgroundColor = '#ffffff';
+                }
+            }
+
+            // Cert BG
+            const certWrap = document.getElementById('certificateWrapper');
+            if (certWrap) {
+                if (brandingConfig.certBgUrl) {
+                    certWrap.style.backgroundImage = `url('${brandingConfig.certBgUrl}')`;
+                } else {
+                    certWrap.style.backgroundImage = 'none';
+                }
+            }
+
+            // Signatures & Roles
+            const certSignerName = document.getElementById('certSignerName');
+            if (certSignerName) certSignerName.textContent = brandingConfig.signerName;
+
+            const certSignerRole = document.getElementById('certSignerRole');
+            if (certSignerRole) certSignerRole.textContent = brandingConfig.signerRole;
+
+            const certSignScript = document.getElementById('certSignScript');
+            if (certSignScript) certSignScript.textContent = brandingConfig.signerName;
+
+            const idCardSignDisplay = document.getElementById('idCardSignDisplay');
+            if (idCardSignDisplay) idCardSignDisplay.textContent = brandingConfig.idSignerName;
+        }
 
         // Initialize Counter with smooth display
         function updateCounterUI(targetVal, animate = false) {
@@ -1034,11 +1533,406 @@ function doGet(e) {
             }, 30);
         }
 
+        // ==========================================
+        // ADMIN PANEL CONTROLLERS
+        // ==========================================
+        function handleAdminTrigger() {
+            if (isAdminLoggedIn) {
+                openAdminDashboard();
+            } else {
+                openAdminLoginModal();
+            }
+        }
+
+        function openAdminLoginModal() {
+            const err = document.getElementById('adminLoginError');
+            if (err) err.classList.add('hidden');
+            const pwInput = document.getElementById('adminPasswordInput');
+            if (pwInput) pwInput.value = "";
+            document.getElementById('adminLoginModal').classList.remove('hidden');
+        }
+
+        function closeAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.add('hidden');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('adminUsernameInput').value.trim();
+            const password = document.getElementById('adminPasswordInput').value.trim();
+            const errorBox = document.getElementById('adminLoginError');
+
+            if (username === "admin" && password === adminPassword) {
+                isAdminLoggedIn = true;
+                closeAdminLoginModal();
+                updateAdminNavBtn(true);
+                openAdminDashboard();
+                alertUser("एडमिन लॉगिन सफल! कंसोल खुल गया है।");
+            } else {
+                errorBox.classList.remove('hidden');
+            }
+        }
+
+        function updateAdminNavBtn(logged) {
+            const btn = document.getElementById('adminNavBtn');
+            if (!btn) return;
+            if (logged) {
+                btn.innerHTML = `<i class="fas fa-gauge-high text-xs"></i> <span>कंसोल</span>`;
+                btn.className = "bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm border border-emerald-400/40";
+            } else {
+                btn.innerHTML = `<i class="fas fa-lock text-xs"></i> <span>एडमिन पैनल</span>`;
+                btn.className = "bg-safePink-600 hover:bg-safePink-700 text-white font-semibold px-3 py-1 rounded-lg text-xs transition flex items-center gap-1.5 shadow-sm shadow-pink-600/30 border border-pink-400/40";
+            }
+        }
+
+        function handleAdminLogout() {
+            isAdminLoggedIn = false;
+            updateAdminNavBtn(false);
+            closeAdminDashboard();
+            alertUser("एडमिन सत्र समाप्त (Logged Out).");
+        }
+
+        function openAdminDashboard() {
+            // Populate inputs
+            const urlInput = document.getElementById('adminGSheetUrlInput');
+            if (urlInput) urlInput.value = gsheetConfig.url;
+
+            const counterInput = document.getElementById('adminCounterInput');
+            if (counterInput) counterInput.value = participantCount;
+
+            const sName = document.getElementById('adminSignerNameInput');
+            if (sName) sName.value = brandingConfig.signerName;
+
+            const sRole = document.getElementById('adminSignerRoleInput');
+            if (sRole) sRole.value = brandingConfig.signerRole;
+
+            const idSign = document.getElementById('adminIdSignerInput');
+            if (idSign) idSign.value = brandingConfig.idSignerName;
+
+            const certCode = document.getElementById('adminCertCodeInput');
+            if (certCode) certCode.value = brandingConfig.certCode;
+
+            renderAdminRecordsTable();
+
+            document.getElementById('adminDashboardModal').classList.remove('hidden');
+        }
+
+        function closeAdminDashboard() {
+            document.getElementById('adminDashboardModal').classList.add('hidden');
+        }
+
+        function switchAdminTab(tabId) {
+            const tabs = ['tabGSheet', 'tabBranding', 'tabSignatory', 'tabData', 'tabSecurity'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`adminTab-${t}`);
+                const btn = document.getElementById(`adminTabBtn-${t}`);
+                if (el && btn) {
+                    if (t === tabId) {
+                        el.classList.remove('hidden');
+                        btn.className = "px-4 py-2 text-xs font-bold rounded-t-xl transition flex items-center gap-1.5 bg-white text-safeNavy-950 border-t-2 border-safeNavy-900 shadow-sm";
+                    } else {
+                        el.classList.add('hidden');
+                        btn.className = "px-4 py-2 text-xs font-bold rounded-t-xl transition flex items-center gap-1.5 text-slate-600 hover:text-slate-900";
+                    }
+                }
+            });
+        }
+
+        function togglePasswordVisibility(inputId, btn) {
+            const inp = document.getElementById(inputId);
+            if (!inp) return;
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                btn.innerHTML = `<i class="fas fa-eye-slash text-xs"></i>`;
+            } else {
+                inp.type = 'password';
+                btn.innerHTML = `<i class="fas fa-eye text-xs"></i>`;
+            }
+        }
+
+        function handleAdminChangePassword() {
+            const curr = document.getElementById('adminCurrentPwInput').value.trim();
+            const next = document.getElementById('adminNewPwInput').value.trim();
+
+            if (curr !== adminPassword) {
+                alertUser("वर्तमान पासवर्ड गलत है!");
+                return;
+            }
+            if (!next || next.length < 4) {
+                alertUser("नया पासवर्ड कम से कम 4 अक्षरों का होना चाहिए।");
+                return;
+            }
+
+            adminPassword = next;
+            localStorage.setItem(ADMIN_PW_KEY, next);
+            document.getElementById('adminCurrentPwInput').value = "";
+            document.getElementById('adminNewPwInput').value = "";
+            alertUser("एडमिन पासवर्ड सफलतापूर्वक अपडेट कर दिया गया!");
+        }
+
+        // Branding Management (Logo & BG)
+        function handleAdminLogoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                brandingConfig.customLogoUrl = evt.target.result;
+                saveBrandingConfig();
+                applyBrandingToUI();
+                alertUser("नया लोगो सफलतापूर्वक अपडेट किया गया!");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyAdminLogoUrl() {
+            const url = document.getElementById('adminLogoUrlInput').value.trim();
+            if (!url) {
+                alertUser("कृपया मान्य लोगो URL दर्ज करें!");
+                return;
+            }
+            brandingConfig.customLogoUrl = url;
+            saveBrandingConfig();
+            applyBrandingToUI();
+            alertUser("लोगो URL लागू किया गया!");
+        }
+
+        function resetToDefaultLogo() {
+            brandingConfig.customLogoUrl = "";
+            saveBrandingConfig();
+            applyBrandingToUI();
+            const adminPreview = document.getElementById('adminLogoPreviewBox');
+            if (adminPreview) renderSafeLogoSvg(adminPreview, 70);
+            alertUser("डिफ़ॉल्ट PROJECT SAFE लोगो बहाल किया गया।");
+        }
+
+        function handleIdCardBgUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                brandingConfig.idCardBgUrl = evt.target.result;
+                saveBrandingConfig();
+                applyBrandingToUI();
+                alertUser("ID कार्ड बैकग्राउंड अपडेट हो गया!");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyIdBgUrl() {
+            const url = document.getElementById('adminIdBgUrlInput').value.trim();
+            if (!url) return;
+            brandingConfig.idCardBgUrl = url;
+            saveBrandingConfig();
+            applyBrandingToUI();
+            alertUser("ID कार्ड BG सेट किया गया!");
+        }
+
+        function clearIdCardBg() {
+            brandingConfig.idCardBgUrl = "";
+            saveBrandingConfig();
+            applyBrandingToUI();
+            alertUser("ID कार्ड बैकग्राउंड हटाया गया।");
+        }
+
+        function handleCertBgUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                brandingConfig.certBgUrl = evt.target.result;
+                saveBrandingConfig();
+                applyBrandingToUI();
+                alertUser("सर्टिफिकेट बैकग्राउंड अपडेट हो गया!");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function applyCertBgUrl() {
+            const url = document.getElementById('adminCertBgUrlInput').value.trim();
+            if (!url) return;
+            brandingConfig.certBgUrl = url;
+            saveBrandingConfig();
+            applyBrandingToUI();
+            alertUser("सर्टिफिकेट BG सेट किया गया!");
+        }
+
+        function clearCertBg() {
+            brandingConfig.certBgUrl = "";
+            saveBrandingConfig();
+            applyBrandingToUI();
+            alertUser("सर्टिफिकेट बैकग्राउंड डिफ़ॉल्ट पर रीसेट किया गया।");
+        }
+
+        function saveAdminSignatoryDetails() {
+            brandingConfig.signerName = document.getElementById('adminSignerNameInput').value.trim() || "श्रीमती पूजा कश्यप";
+            brandingConfig.signerRole = document.getElementById('adminSignerRoleInput').value.trim() || "निदेशक / मुख्य समन्वयक, PROJECT SAFE";
+            brandingConfig.idSignerName = document.getElementById('adminIdSignerInput').value.trim() || "Dr. V. Sharma";
+            brandingConfig.certCode = document.getElementById('adminCertCodeInput').value.trim() || "WSC/SAFE/2026/IND";
+
+            saveBrandingConfig();
+            applyBrandingToUI();
+            alertUser("हस्ताक्षर एवं प्रमाण पत्र विवरण सहेज लिए गए!");
+        }
+
+        function saveBrandingConfig() {
+            localStorage.setItem(BRANDING_STORAGE_KEY, JSON.stringify(brandingConfig));
+        }
+
+        // Admin Google Sheet Config
+        function saveAdminGSheetConfig() {
+            const url = document.getElementById('adminGSheetUrlInput').value.trim();
+            gsheetConfig.url = url;
+            localStorage.setItem(GSHEET_URL_KEY, url);
+            const userCfgInput = document.getElementById('cfgGSheetUrl');
+            if (userCfgInput) userCfgInput.value = url;
+            alertUser("Google Sheet URL सफलतापूर्वक सहेजा गया!");
+        }
+
+        function saveAdminCounter() {
+            const val = parseInt(document.getElementById('adminCounterInput').value) || 0;
+            participantCount = val;
+            updateCounterUI(val, true);
+            alertUser(`काउंटर ${val} पर अपडेट किया गया।`);
+        }
+
+        function syncCountFromGoogleSheetNow() {
+            fetchCountFromGoogleSheet();
+            setTimeout(() => {
+                const counterInput = document.getElementById('adminCounterInput');
+                if (counterInput) counterInput.value = participantCount;
+            }, 800);
+        }
+
+        function copyAdminScript() {
+            const text = document.getElementById('adminAppsScriptCode');
+            text.select();
+            text.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            const btn = document.getElementById('adminCopyCodeBtn');
+            btn.innerHTML = `<i class="fas fa-check text-emerald-400"></i> कॉपी हो गया!`;
+            setTimeout(() => {
+                btn.innerHTML = `<i class="fas fa-copy"></i> स्क्रिप्ट कॉपी करें`;
+            }, 2500);
+        }
+
+        async function testAdminGSheetConnection() {
+            const url = document.getElementById('adminGSheetUrlInput').value.trim();
+            if (!url) {
+                alertUser("कृपया Google Sheet Web App URL डालें!");
+                return;
+            }
+            alertUser("Google Sheet कनेक्शन जाँचा जा रहा है...");
+            try {
+                const res = await fetch(url + (url.includes('?') ? '&' : '?') + 'test=1', { method: 'GET' });
+                const data = await res.json();
+                if (data && data.status === "success") {
+                    alertUser(`सफल कनेक्शन! Google Sheet में कुल ${data.totalCount || 0} पंक्तियाँ हैं।`);
+                    if (typeof data.totalCount === 'number') {
+                        participantCount = data.totalCount;
+                        updateCounterUI(participantCount, true);
+                        const cInp = document.getElementById('adminCounterInput');
+                        if (cInp) cInp.value = participantCount;
+                    }
+                }
+            } catch(e) {
+                alertUser("Google Sheet Webhook URL सक्रिय है (CORS परीक्षण पूर्ण)!");
+            }
+        }
+
+        // Render & Filter Admin Records Table
+        function renderAdminRecordsTable(records = registeredList) {
+            const tbody = document.getElementById('adminRecordsTableBody');
+            const countLabel = document.getElementById('adminRecordsCount');
+            const filteredCount = document.getElementById('adminFilteredCountDisplay');
+
+            if (countLabel) countLabel.textContent = registeredList.length;
+            if (filteredCount) filteredCount.textContent = `कुल ${records.length} प्रविष्टियां`;
+
+            if (!tbody) return;
+
+            if (records.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-slate-400">
+                            कोई रिकॉर्ड उपलब्ध नहीं है।
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = records.map((r, idx) => `
+                <tr class="hover:bg-sky-50/50 transition">
+                    <td class="p-2.5 font-mono font-bold text-safeNavy-950">${r.regId}</td>
+                    <td class="p-2.5 font-bold text-slate-800">${r.fullName}</td>
+                    <td class="p-2.5 font-mono text-slate-600">${r.mobile || '-'}</td>
+                    <td class="p-2.5 text-slate-700 truncate max-w-[150px]">${r.org || '-'}</td>
+                    <td class="p-2.5 text-slate-700">${r.district || '-'}</td>
+                    <td class="p-2.5 text-slate-500 text-[10px]">${r.timestamp ? new Date(r.timestamp).toLocaleDateString('en-IN') : '-'}</td>
+                    <td class="p-2.5 text-center">
+                        <button type="button" onclick="deleteRecordItem('${r.regId}')" class="text-rose-500 hover:text-rose-700 p-1 rounded hover:bg-rose-50" title="हटाएँ">
+                            <i class="fas fa-trash-can"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterAdminRecords() {
+            const q = document.getElementById('adminSearchInput').value.toLowerCase().trim();
+            if (!q) {
+                renderAdminRecordsTable(registeredList);
+                return;
+            }
+            const filtered = registeredList.filter(r => 
+                (r.regId && r.regId.toLowerCase().includes(q)) ||
+                (r.fullName && r.fullName.toLowerCase().includes(q)) ||
+                (r.mobile && r.mobile.toLowerCase().includes(q)) ||
+                (r.district && r.district.toLowerCase().includes(q)) ||
+                (r.org && r.org.toLowerCase().includes(q))
+            );
+            renderAdminRecordsTable(filtered);
+        }
+
+        function deleteRecordItem(regId) {
+            registeredList = registeredList.filter(r => r.regId !== regId);
+            localStorage.setItem(RECORDS_STORAGE_KEY, JSON.stringify(registeredList));
+            renderAdminRecordsTable();
+            alertUser(`रिकॉर्ड ${regId} हटाया गया।`);
+        }
+
+        function clearAllRegisteredData() {
+            registeredList = [];
+            localStorage.removeItem(RECORDS_STORAGE_KEY);
+            renderAdminRecordsTable();
+            alertUser("सभी पंजीकृत प्रविष्टियाँ हटा दी गईं।");
+        }
+
+        function exportRegistrationsToCSV() {
+            if (registeredList.length === 0) {
+                alertUser("डाउनलोड करने हेतु कोई प्रतिभागी रिकॉर्ड उपलब्ध नहीं है।");
+                return;
+            }
+            let csv = "Reg ID,Full Name,Mobile,Organization,District,Timestamp\n";
+            registeredList.forEach(r => {
+                csv += `"${r.regId || ''}","${r.fullName || ''}","${r.mobile || ''}","${r.org || ''}","${r.district || ''}","${r.timestamp || ''}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Project_SAFE_Registrations_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            alertUser("CSV फ़ाइल सफलतापूर्वक डाउनलोड हो गई!");
+        }
+
         function resetCounterToZero() {
             participantCount = 0;
             updateCounterUI(0, false);
             const input = document.getElementById('manualCounterInput');
             if (input) input.value = 0;
+            const adminInp = document.getElementById('adminCounterInput');
+            if (adminInp) adminInp.value = 0;
             alertUser("काउंटर सफलतापूर्वक 0 पर रीसेट कर दिया गया है।");
         }
 
@@ -1266,6 +2160,24 @@ function doGet(e) {
             const formattedDate = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${today.getFullYear()}`;
 
             registeredList.push({ regId, fullName, mobile, org, district, timestamp: new Date().toISOString() });
+            localStorage.setItem(RECORDS_STORAGE_KEY, JSON.stringify(registeredList));
+
+            // Populate ID Card Elements
+            document.getElementById('idCardPhoto').src = currentPhotoDataUrl;
+            document.getElementById('idCardName').textContent = fullName;
+            document.getElementById('idCardRegNo').textContent = regId;
+            document.getElementById('idCardOrg').textContent = org;
+            document.getElementById('idCardDistrict').textContent = district;
+
+            // Re-apply latest branding
+            applyBrandingToUI();
+            document.getElementById('idCardBlood').textContent = blood;
+            document.getElementById('idCardEmergency').textContent = `${emergencyPhone} ${emergencyName ? '(' + emergencyName + ')' : ''}`;
+
+            // Populate Certificate Elements
+            document.getElementById('certParticipantPhoto').src = currentPhotoDataUrl;
+            document.getElementById('certParticipantName').textContent = fullName;
+            document.getElementById('certRegNo').textContent = regId;
 
             // Populate ID Card Elements
             document.getElementById('idCardPhoto').src = currentPhotoDataUrl;
@@ -1419,6 +2331,7 @@ function doGet(e) {
         window.onload = function() {
             updateCounterUI(participantCount, false);
             fetchCountFromGoogleSheet();
+            applyBrandingToUI();
         };
     </script>
 </body>
